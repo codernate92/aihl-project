@@ -1,0 +1,1373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The AIHL Project — Synthetic Media & the Protection of Prisoners of War under IHL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d0f13;
+    --ink-2:#141720;
+    --surface:#171a24;
+    --surface-2:#1d2130;
+    --surface-3:#232838;
+    --line:#2a2f40;
+    --line-soft:#222637;
+    --paper:#ece7dd;
+    --paper-dim:#c8c4ba;
+    --muted:#888e9e;
+    --muted-2:#6b7185;
+    --accent:#c23a30;
+    --accent-soft:#d9655b;
+    --accent-deep:#8f2a23;
+    /* threat heat ramp */
+    --h1:#5b6678;
+    --h2:#a07e3c;
+    --h3:#cd7a30;
+    --h4:#c23a30;
+    --ok:#5d9b7e;
+    --maxw:1180px;
+    --radius:4px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:"Hanken Grotesk",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  body::before{
+    /* faint grain + grid atmosphere */
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:
+      linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);
+    background-size:64px 64px;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(1200px 600px at 80% -10%, rgba(194,58,48,.10), transparent 60%),
+               radial-gradient(900px 500px at 0% 0%, rgba(60,80,120,.07), transparent 55%);
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;position:relative;z-index:1}
+  a{color:inherit}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+  h1,h2,h3,h4{font-family:"Fraunces",Georgia,serif;font-weight:600;line-height:1.1;margin:0}
+  .serif{font-family:"Fraunces",Georgia,serif}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--accent-soft);font-weight:500;
+  }
+  .muted{color:var(--muted)}
+
+  /* ---------- top nav ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:40;
+    backdrop-filter:blur(14px);
+    background:linear-gradient(180deg, rgba(13,15,19,.92), rgba(13,15,19,.78));
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav-inner{display:flex;align-items:center;gap:22px;height:62px;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .brand{display:flex;align-items:center;gap:11px;cursor:pointer;user-select:none}
+  .brand .mark{
+    width:30px;height:30px;flex:0 0 auto;border:1.5px solid var(--accent);border-radius:50%;
+    display:grid;place-items:center;position:relative;
+  }
+  .brand .mark::before{content:"";position:absolute;width:13px;height:3px;background:var(--accent)}
+  .brand .mark::after{content:"";position:absolute;width:3px;height:13px;background:var(--accent)}
+  .brand .name{font-family:"Fraunces",serif;font-weight:600;font-size:18px;letter-spacing:.01em}
+  .brand .name b{color:var(--accent-soft);font-weight:600}
+  .navlinks{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+  .navlinks button{
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.04em;
+    background:transparent;border:1px solid transparent;color:var(--paper-dim);
+    padding:8px 12px;border-radius:var(--radius);cursor:pointer;transition:.18s;white-space:nowrap;
+  }
+  .navlinks button:hover{color:var(--paper);background:var(--surface)}
+  .navlinks button.active{color:var(--paper);border-color:var(--line);background:var(--surface-2)}
+  .navlinks button.active span{color:var(--accent-soft)}
+
+  /* ---------- view container ---------- */
+  main{padding:52px 0 90px;min-height:60vh}
+  .view{display:none;animation:fade .5s ease both}
+  .view.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .stagger>*{opacity:0;animation:rise .6s ease forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .stagger>*{transform:translateY(14px)}
+
+  .section-head{margin-bottom:30px;max-width:760px}
+  .section-head h2{font-size:clamp(28px,4vw,42px);letter-spacing:-.01em;margin:10px 0 12px}
+  .section-head p{color:var(--paper-dim);font-size:17px;margin:0}
+
+  /* ---------- overview / hero ---------- */
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:start}
+  .hero h1{font-size:clamp(34px,5.4vw,62px);letter-spacing:-.02em;margin:16px 0 18px}
+  .hero h1 em{font-style:italic;color:var(--accent-soft)}
+  .hero .lede{font-size:18px;color:var(--paper-dim);max-width:560px}
+  .hero .lede strong{color:var(--paper);font-weight:600}
+  .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+  .pill{
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.03em;
+    border:1px solid var(--line);background:var(--surface);color:var(--paper-dim);
+    padding:6px 11px;border-radius:100px;
+  }
+  .hero-card{
+    border:1px solid var(--line);background:linear-gradient(180deg,var(--surface),var(--ink-2));
+    border-radius:8px;padding:26px;position:relative;overflow:hidden;
+  }
+  .hero-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-deep))}
+  .hero-card h3{font-size:20px;margin-bottom:6px}
+  .reorient{display:grid;gap:14px;margin-top:18px}
+  .reorient .row{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+  .reorient .tag{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px;white-space:nowrap}
+  .reorient .from{color:var(--muted-2);text-decoration:line-through;text-decoration-color:var(--accent-deep)}
+  .reorient .to{color:var(--paper)}
+  .arrowdown{display:flex;justify-content:center;color:var(--accent);font-size:14px}
+
+  .contrib{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:54px}
+  .contrib .c{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:22px;position:relative;transition:.2s}
+  .contrib .c:hover{transform:translateY(-3px);border-color:var(--accent-deep)}
+  .contrib .n{font-family:"Fraunces",serif;font-size:13px;color:var(--accent-soft);letter-spacing:.1em}
+  .contrib .c h4{font-size:18px;margin:8px 0 8px}
+  .contrib .c p{color:var(--paper-dim);font-size:14.5px;margin:0}
+
+  .quote{
+    margin:56px 0 0;border-left:2px solid var(--accent);padding:6px 0 6px 26px;
+    font-family:"Fraunces",serif;font-style:italic;font-size:22px;line-height:1.4;color:var(--paper);max-width:840px;
+  }
+  .quote cite{display:block;font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);letter-spacing:.04em;margin-top:12px}
+
+  /* ---------- generic cards ---------- */
+  .cards{display:grid;gap:16px}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .grid-2{grid-template-columns:repeat(2,1fr)}
+  .card{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:20px}
+  .card h4{font-size:18px;margin-bottom:8px}
+  .card p{color:var(--paper-dim);font-size:14.5px;margin:0}
+
+  .cond .ic{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--accent);display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;color:var(--accent-soft);font-size:14px;margin-bottom:14px}
+
+  /* ---------- pipeline ---------- */
+  .pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:8px;align-items:stretch}
+  .stage{position:relative;padding-right:18px}
+  .stage:last-child{padding-right:0}
+  .stage-card{
+    border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:16px;height:100%;cursor:pointer;transition:.2s;position:relative;overflow:hidden;
+  }
+  .stage-card:hover{border-color:var(--accent-deep);background:var(--surface-2)}
+  .stage-card.open{border-color:var(--accent);background:var(--surface-2)}
+  .stage .idx{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--accent-soft);letter-spacing:.08em}
+  .stage h4{font-size:16px;margin:6px 0 4px;line-height:1.15}
+  .stage .sub{font-size:12.5px;color:var(--muted);min-height:32px}
+  .stage .arrow{position:absolute;right:-2px;top:50%;transform:translateY(-50%);color:var(--line);font-size:18px;z-index:2}
+  .stage:last-child .arrow{display:none}
+  .stage .more{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted-2);margin-top:10px;letter-spacing:.05em}
+  .stage-detail{
+    grid-column:1/-1;border:1px solid var(--accent-deep);border-radius:6px;background:var(--ink-2);
+    padding:20px 22px;margin-top:16px;display:none;
+  }
+  .stage-detail.show{display:block;animation:fade .35s ease both}
+  .stage-detail h4{font-size:17px;margin-bottom:4px}
+  .stage-detail .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+  .stage-detail .chips span{font-family:"IBM Plex Mono",monospace;font-size:11.5px;background:var(--surface);border:1px solid var(--line);color:var(--paper-dim);padding:4px 9px;border-radius:4px}
+  .asym{margin-top:22px;border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--surface);border-radius:6px;padding:18px 20px}
+  .asym b{color:var(--accent-soft)}
+
+  /* ---------- layer stack (framework + explorer) ---------- */
+  .layerstack{display:flex;flex-direction:column;gap:8px}
+  .layer{
+    border:1px solid var(--line);background:var(--surface);border-radius:6px;
+    display:grid;grid-template-columns:54px 1fr auto;align-items:center;gap:14px;
+    padding:13px 16px;cursor:pointer;transition:.18s;position:relative;overflow:hidden;
+  }
+  .layer:hover{border-color:var(--accent-deep);background:var(--surface-2)}
+  .layer.active{border-color:var(--accent);background:var(--surface-2)}
+  .layer.dim{opacity:.42}
+  .layer .lid{
+    font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;color:var(--paper);
+    width:42px;height:42px;border-radius:5px;background:var(--surface-3);border:1px solid var(--line);
+    display:grid;place-items:center;
+  }
+  .layer .lname{font-family:"Fraunces",serif;font-size:17px;font-weight:600}
+  .layer .lsub{font-size:13px;color:var(--muted);margin-top:1px}
+  .layer .lright{display:flex;align-items:center;gap:12px}
+  .heat{display:flex;align-items:center;gap:8px}
+  .heat .dot{width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 4px rgba(255,255,255,.03)}
+  .heat .lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .layer .chev{color:var(--muted-2);font-size:12px;transition:.2s;font-family:"IBM Plex Mono",monospace}
+  .layer.expanded .chev{transform:rotate(90deg);color:var(--accent-soft)}
+  .layer-detail{
+    grid-column:1/-1;border-top:1px dashed var(--line);margin-top:13px;padding-top:13px;
+    color:var(--paper-dim);font-size:14px;display:none;
+  }
+  .layer.expanded .layer-detail{display:block;animation:fade .3s ease both}
+  .layer-detail .meta{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.05em;color:var(--muted);text-transform:uppercase;margin-bottom:5px}
+  .prio-flag{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--accent);padding:3px 7px;border-radius:3px;font-weight:600}
+
+  /* adaptation table */
+  .adapt{display:grid;gap:14px;margin-top:8px}
+  .adapt .a{border:1px solid var(--line);background:var(--surface);border-radius:6px;overflow:hidden}
+  .adapt .a .top{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .adapt .a .cell{padding:16px 18px}
+  .adapt .a .cell.maestro{background:var(--ink-2);border-right:1px solid var(--line)}
+  .adapt .a .label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
+  .adapt .a .label.m{color:var(--muted)}
+  .adapt .a .label.x{color:var(--accent-soft)}
+  .adapt .a .layer-tag{font-family:"Fraunces",serif;font-size:16px;font-weight:600;padding:11px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);display:flex;align-items:center;gap:10px}
+  .adapt .a .layer-tag .lid{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--accent-soft);border:1px solid var(--line);padding:2px 7px;border-radius:3px}
+  .adapt .a .cell p{margin:0;font-size:14px;color:var(--paper-dim)}
+  .adapt .a .why{padding:13px 18px;border-top:1px solid var(--line);background:var(--ink);font-size:13px;color:var(--muted);display:flex;gap:10px}
+  .adapt .a .why b{color:var(--paper-dim);font-weight:500;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;padding-top:2px}
+
+  /* steps reference */
+  .steps-ref{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+  .steps-ref .s{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:18px;position:relative}
+  .steps-ref .s .num{font-family:"Fraunces",serif;font-size:30px;color:var(--surface-3);position:absolute;top:12px;right:16px;font-weight:700}
+  .steps-ref .s .k{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;color:var(--accent-soft);text-transform:uppercase}
+  .steps-ref .s h4{font-size:17px;margin:6px 0 7px;max-width:80%}
+  .steps-ref .s p{font-size:13.5px;color:var(--paper-dim);margin:0}
+
+  /* ---------- scenario explorer ---------- */
+  .scn-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px}
+  .scn-tab{
+    text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:7px;
+    padding:18px;cursor:pointer;transition:.2s;position:relative;overflow:hidden;
+  }
+  .scn-tab:hover{transform:translateY(-2px);border-color:var(--accent-deep)}
+  .scn-tab.active{border-color:var(--accent);background:var(--surface-2)}
+  .scn-tab.active::before{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--accent)}
+  .scn-tab .sx{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+  .scn-tab h4{font-size:17px;margin:7px 0 9px;line-height:1.18}
+  .scn-tab .ent{font-size:12.5px;color:var(--accent-soft);font-family:"IBM Plex Mono",monospace}
+  .scn-tab .arts{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+  .scn-tab .arts span{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--paper-dim);border:1px solid var(--line);padding:2px 6px;border-radius:3px;background:var(--ink-2)}
+
+  .exp{display:grid;grid-template-columns:1fr 380px;gap:26px;align-items:start}
+  @media(max-width:980px){.exp{grid-template-columns:1fr}}
+
+  .scn-summary{border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--surface);border-radius:6px;padding:16px 18px;margin-bottom:18px}
+  .scn-summary .h{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+  .scn-summary p{margin:0;color:var(--paper-dim);font-size:14.5px}
+
+  .stepbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+  .stepbar button{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.02em;
+    border:1px solid var(--line);background:var(--surface);color:var(--paper-dim);
+    padding:7px 10px;border-radius:4px;cursor:pointer;transition:.16s;display:flex;align-items:center;gap:7px;
+  }
+  .stepbar button:hover{border-color:var(--accent-deep);color:var(--paper)}
+  .stepbar button.active{background:var(--accent);border-color:var(--accent);color:var(--ink);font-weight:600}
+  .stepbar button .n{opacity:.7}
+  .stepbar button.active .n{opacity:1}
+
+  .step-panel{border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:22px;min-height:300px}
+  .step-panel .stepmeta{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--accent-soft);letter-spacing:.06em;text-transform:uppercase}
+  .step-panel h3{font-size:24px;margin:7px 0 6px}
+  .step-panel .blurb{color:var(--muted);font-size:14px;margin-bottom:18px;max-width:560px}
+  .step-body{animation:fade .35s ease both}
+
+  .stack-side{position:sticky;top:78px}
+  .stack-side .slabel{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:11px;display:flex;justify-content:space-between;align-items:center}
+  .legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft)}
+  .legend .l{display:flex;align-items:center;gap:6px;font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .legend .l i{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+  /* attack chain */
+  .chain{display:flex;flex-direction:column;gap:0;margin-top:6px}
+  .chain .node{
+    border:1px solid var(--line);background:var(--ink-2);border-radius:6px;padding:12px 14px;
+    display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;position:relative;
+  }
+  .chain .node .lid{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--accent-soft);border:1px solid var(--accent-deep);border-radius:4px;width:34px;height:34px;display:grid;place-items:center;background:var(--surface)}
+  .chain .node .ctxt{font-size:13.5px}
+  .chain .node .ctxt b{font-family:"Fraunces",serif;font-weight:600;display:block;font-size:14.5px;margin-bottom:1px}
+  .chain .link{height:20px;width:2px;background:linear-gradient(var(--accent-deep),var(--accent));margin-left:32px}
+  .chain .link::after{content:"▾";position:relative;left:-5px;top:6px;color:var(--accent);font-size:11px}
+  .chain-note{margin-top:14px;display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--muted);background:var(--ink);border:1px dashed var(--line);border-radius:6px;padding:11px 13px}
+  .chain-note .tag{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--h3);white-space:nowrap;padding-top:2px}
+
+  /* prioritized list / mitigation cards */
+  .ranklist{display:flex;flex-direction:column;gap:10px}
+  .ranklist .r{display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:start;border:1px solid var(--line);background:var(--ink-2);border-radius:6px;padding:13px 15px}
+  .ranklist .r .rk{font-family:"Fraunces",serif;font-weight:700;font-size:20px;color:var(--accent-soft);line-height:1}
+  .ranklist .r .rt b{font-family:"Fraunces",serif;font-size:15px;display:block;margin-bottom:2px}
+  .ranklist .r .rt span{font-size:13.5px;color:var(--paper-dim)}
+  .ranklist .r .tags{margin-top:7px;display:flex;gap:5px;flex-wrap:wrap}
+  .ranklist .r .tags i{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--accent-soft);border:1px solid var(--accent-deep);padding:2px 6px;border-radius:3px}
+
+  .mits{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .mit{border:1px solid var(--line);background:var(--ink-2);border-radius:6px;padding:14px 15px}
+  .mit .layhead{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+  .mit .layhead .lid{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--accent-soft);border:1px solid var(--accent-deep);padding:2px 7px;border-radius:3px}
+  .mit .layhead b{font-family:"Fraunces",serif;font-size:14px}
+  .mit p{margin:0;font-size:13.5px;color:var(--paper-dim)}
+
+  /* monitoring loop */
+  .loop{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:4px}
+  .loop .lp{border:1px solid var(--line);background:var(--ink-2);border-radius:6px;padding:14px;text-align:left;position:relative}
+  .loop .lp .ic{font-family:"IBM Plex Mono",monospace;color:var(--accent-soft);font-size:11px;letter-spacing:.06em}
+  .loop .lp b{font-family:"Fraunces",serif;font-size:14px;display:block;margin:6px 0 5px}
+  .loop .lp p{margin:0;font-size:12.5px;color:var(--paper-dim)}
+  .actorline{margin-top:14px;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+  .actorline .h{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
+  .actorline span{font-family:"IBM Plex Mono",monospace;font-size:11px;border:1px solid var(--line);background:var(--surface);color:var(--paper-dim);padding:4px 9px;border-radius:100px}
+
+  /* ---------- responsibility matrix ---------- */
+  .matrix-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:6px}
+  table.matrix{border-collapse:collapse;width:100%;min-width:720px}
+  table.matrix th,table.matrix td{padding:0;text-align:center}
+  table.matrix thead th{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--paper-dim);font-weight:500;padding:14px 10px;border-bottom:1px solid var(--line);vertical-align:bottom;
+  }
+  table.matrix thead th.corner{text-align:left;color:var(--muted)}
+  table.matrix tbody th{
+    text-align:left;font-family:"Hanken Grotesk",sans-serif;font-weight:600;font-size:14px;color:var(--paper);
+    padding:12px 16px 12px 14px;white-space:nowrap;border-right:1px solid var(--line);
+  }
+  table.matrix tbody th .role{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted);font-weight:400;display:block;margin-top:1px;text-transform:none;letter-spacing:0}
+  table.matrix td .cellbox{
+    margin:5px;height:52px;border-radius:5px;display:grid;place-items:center;cursor:default;transition:.18s;position:relative;
+    font-family:"IBM Plex Mono",monospace;font-size:11px;color:rgba(255,255,255,.0);
+  }
+  table.matrix td .cellbox:hover{transform:scale(1.04)}
+  table.matrix td .cellbox:hover .v{color:rgba(255,255,255,.85)}
+  table.matrix td .cellbox .v{transition:.18s}
+  .mx-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;align-items:center}
+  .mx-legend .h{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .mx-legend .l{display:flex;align-items:center;gap:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--paper-dim)}
+  .mx-legend .l i{width:18px;height:12px;border-radius:3px;display:inline-block}
+  .keyinsight{margin-top:24px;border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--surface);border-radius:6px;padding:20px 22px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+  .keyinsight .big{font-family:"Fraunces",serif;font-weight:700;font-size:44px;color:var(--accent-soft);line-height:.9;text-align:center}
+  .keyinsight .big small{display:block;font-size:11px;font-family:"IBM Plex Mono",monospace;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:6px;font-weight:400}
+  .keyinsight p{margin:0;color:var(--paper-dim);font-size:15px}
+  .keyinsight p b{color:var(--paper)}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line-soft);margin-top:30px;padding:34px 0 60px}
+  footer .fin{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
+  footer .note{max-width:620px;color:var(--muted);font-size:13px}
+  footer .note b{color:var(--paper-dim);font-weight:600;font-family:"Fraunces",serif}
+  footer .meta{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted-2);text-align:right;line-height:1.9}
+
+  .disclaimer{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted-2);letter-spacing:.03em;margin-top:18px;border-top:1px dashed var(--line);padding-top:14px}
+
+  /* responsive */
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr}
+    .contrib,.grid-3,.steps-ref{grid-template-columns:1fr}
+    .grid-2,.mits,.loop{grid-template-columns:1fr}
+    .pipe{grid-template-columns:1fr;gap:10px}
+    .stage{padding-right:0}.stage .arrow{display:none}
+    .scn-tabs{grid-template-columns:1fr}
+    .adapt .a .top{grid-template-columns:1fr}
+    .adapt .a .cell.maestro{border-right:none;border-bottom:1px solid var(--line)}
+    .navlinks{display:none}
+  }
+  /* ============================================================
+     THE AIHL PROJECT — full-site additions
+     ============================================================ */
+  .brand .name .the{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);font-weight:500;margin-right:2px;position:relative;top:-1px}
+  .nav-cta{
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.04em;
+    border:1px solid var(--accent);background:rgba(194,58,48,.10);color:var(--accent-soft);
+    padding:8px 14px;border-radius:var(--radius);cursor:pointer;transition:.18s;white-space:nowrap;margin-left:8px;
+  }
+  .nav-cta:hover{background:var(--accent);color:#fff;box-shadow:0 8px 22px -10px rgba(194,58,48,.7)}
+
+  /* overview · section index */
+  .startblock{margin-top:58px}
+  .startblock .eyebrow{margin-bottom:16px}
+  .indexgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .idxcard{
+    text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 20px 18px;cursor:pointer;transition:.22s;position:relative;overflow:hidden;color:inherit;font:inherit;
+  }
+  .idxcard::after{content:"";position:absolute;left:0;top:0;height:100%;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:.25s}
+  .idxcard:hover{background:var(--surface-2);transform:translateY(-3px)}
+  .idxcard:hover::after{transform:scaleY(1)}
+  .idxcard .k{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--accent-soft);text-transform:uppercase}
+  .idxcard h4{font-size:19px;margin:11px 0 6px}
+  .idxcard p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.5}
+  .idxcard .go{margin-top:13px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--paper-dim);display:flex;align-items:center;gap:6px}
+  .idxcard .go .ar{transition:.2s}
+  .idxcard:hover .go .ar{transform:translateX(4px);color:var(--accent-soft)}
+
+  /* research */
+  .research-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:24px;align-items:start}
+  .abstract{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:26px 30px}
+  .abstract h3{font-size:23px;margin:0 0 14px;letter-spacing:-.01em}
+  .abstract p{color:var(--paper-dim);font-size:15px;margin:0 0 12px;line-height:1.6}
+  .abstract p:last-child{margin-bottom:0}
+  .paper-side{display:flex;flex-direction:column;gap:14px}
+  .paper-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
+  .paper-card .eyebrow{margin-bottom:10px}
+  .paper-card .ttl{font-family:"Fraunces",serif;font-size:17px;line-height:1.3;color:var(--paper)}
+  .paper-card .mm{font-size:12.5px;color:var(--muted);margin-top:9px;font-family:"IBM Plex Mono",monospace;letter-spacing:.02em;line-height:1.6}
+  .cite{font-size:12px;color:var(--paper-dim);background:var(--ink);border:1px dashed var(--line);border-radius:var(--radius);padding:14px 15px;line-height:1.55;font-family:"IBM Plex Mono",monospace;word-break:break-word}
+  .fw{margin-top:42px}
+  .fwgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+  .fwitem{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+  .fwitem .n{font-family:"IBM Plex Mono",monospace;color:var(--accent-soft);font-size:12px;letter-spacing:.08em}
+  .fwitem h4{font-size:16px;margin:9px 0 6px}
+  .fwitem p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+
+  /* connect / get involved */
+  .connect-lead{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:start}
+  .connect-lead .lede{font-size:17px;color:var(--paper-dim);line-height:1.6}
+  .connect-lead .lede strong{color:var(--paper);font-weight:600}
+  .audience{display:flex;flex-direction:column;gap:10px}
+  .aud{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+  .aud .ab{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--accent-soft);border:1px solid var(--accent);border-radius:3px;padding:4px 8px;white-space:nowrap;margin-top:1px}
+  .aud .ad b{font-family:"Fraunces",serif;font-weight:600;font-size:15px}
+  .aud .ad p{margin:3px 0 0;font-size:13px;color:var(--muted);line-height:1.5}
+  .engage{margin-top:48px}
+  .erow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+  .estep{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:22px 24px}
+  .estep .num{font-family:"Fraunces",serif;font-size:38px;color:var(--surface-3);line-height:1;font-weight:600}
+  .estep h4{font-size:17px;margin:8px 0 8px}
+  .estep p{margin:0;font-size:13.5px;color:var(--paper-dim);line-height:1.55}
+  .cta-box{
+    margin-top:48px;
+    background:radial-gradient(720px 320px at 86% -50%, rgba(194,58,48,.20), transparent 60%), var(--ink-2);
+    border:1px solid var(--line);border-radius:8px;padding:42px 46px;
+    display:flex;justify-content:space-between;align-items:center;gap:34px;flex-wrap:wrap;
+  }
+  .cta-box .ctl{flex:1 1 420px}
+  .cta-box h3{font-size:27px;letter-spacing:-.01em;max-width:580px}
+  .cta-box p{margin:10px 0 0;color:var(--paper-dim);font-size:15px;max-width:540px;line-height:1.6}
+  .cta-actions{display:flex;flex-direction:column;gap:10px;min-width:240px}
+  .btn{
+    font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.03em;text-decoration:none;text-align:center;
+    padding:13px 20px;border-radius:var(--radius);transition:.18s;cursor:pointer;border:1px solid transparent;display:block;
+  }
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.primary:hover{background:var(--accent-soft);box-shadow:0 12px 28px -12px rgba(194,58,48,.75)}
+  .btn.ghost{background:transparent;border-color:var(--line);color:var(--paper-dim)}
+  .btn.ghost:hover{border-color:var(--accent-soft);color:var(--paper)}
+  .editable{color:var(--accent-soft);font-style:normal}
+
+  /* site footer */
+  footer.site{border-top:1px solid var(--line-soft);background:linear-gradient(180deg,transparent,rgba(0,0,0,.28));margin-top:34px;position:relative;z-index:1}
+  .foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:42px;padding:56px 0 34px;max-width:var(--maxw);margin:0 auto}
+  .foot-brand .fb{display:flex;align-items:center;gap:11px;margin-bottom:15px}
+  .foot-brand .fb .mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:50%;position:relative;flex:0 0 auto}
+  .foot-brand .fb .mark::before{content:"";position:absolute;inset:0;margin:auto;width:12px;height:3px;background:var(--accent)}
+  .foot-brand .fb .mark::after{content:"";position:absolute;inset:0;margin:auto;width:3px;height:12px;background:var(--accent)}
+  .foot-brand .fb .nm{font-family:"Fraunces",serif;font-size:17px;font-weight:600}
+  .foot-brand .fb .nm b{color:var(--accent-soft)}
+  .foot-brand p{color:var(--muted);font-size:13.5px;max-width:360px;margin:0;line-height:1.6}
+  .foot-col h5{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);margin:0 0 15px;font-weight:500}
+  .foot-col a,.foot-col button{display:block;background:none;border:0;padding:0;text-align:left;color:var(--paper-dim);font:inherit;font-size:13.5px;text-decoration:none;cursor:pointer;margin-bottom:10px;transition:.15s}
+  .foot-col a:hover,.foot-col button:hover{color:var(--accent-soft)}
+  .foot-bottom{border-top:1px solid var(--line-soft)}
+  .foot-bottom .fbi{max-width:var(--maxw);margin:0 auto;padding:18px 0 42px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+  .foot-bottom .mono{font-size:11.5px;color:var(--muted-2);letter-spacing:.02em}
+  .foot-bottom .mono b{color:var(--paper-dim);font-weight:500}
+
+  @media(max-width:900px){
+    .indexgrid,.fwgrid,.erow{grid-template-columns:1fr}
+    .research-grid,.connect-lead{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr;gap:32px;padding-left:28px;padding-right:28px}
+    .foot-bottom .fbi{padding-left:28px;padding-right:28px}
+    .cta-box{flex-direction:column;align-items:flex-start;padding:32px}
+    .cta-actions{width:100%}
+    .nav-cta{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand" data-view="overview">
+      <div class="mark"></div>
+      <div class="name"><span class="the">The</span> <b>AIHL</b> Project</div>
+    </div>
+    <nav class="navlinks" id="navlinks"></nav>
+    <button class="nav-cta" data-goto="connect">Get involved</button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <!-- OVERVIEW -->
+    <section class="view show" id="view-overview">
+      <div class="hero stagger">
+        <div>
+          <div class="eyebrow">The AIHL Project · AI &times; international humanitarian law</div>
+          <h1>When the <em>fabrication</em> becomes the weapon.</h1>
+          <p class="lede">Synthetic media generation now lets belligerents corrupt the records, communications, and identifications that make a captured person <strong>legible as a human being owed dignity</strong>. AIHL maps where generative AI threatens prisoner-of-war protections — so the harm becomes foreseeable, and therefore preventable.</p>
+          <div class="pillrow">
+            <span class="pill">Geneva law · human dignity</span>
+            <span class="pill">GCIII &amp; customary IHL</span>
+            <span class="pill">7-layer threat model</span>
+            <span class="pill">6 analytic steps</span>
+            <span class="pill">3 worked scenarios</span>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="eyebrow" style="margin-bottom:10px">The reorientation</div>
+          <h3>From Hague law to Geneva law</h3>
+          <p class="muted" style="font-size:14px;margin:6px 0 0">The AI-in-conflict debate has matured around the <em>conduct</em> of war. It has been near-silent on how AI renders war more inhumane.</p>
+          <div class="reorient">
+            <div class="row">
+              <div class="tag">Well-developed</div>
+              <div class="from">Targeting, proportionality, Article&nbsp;36 weapons review, escalation</div>
+            </div>
+            <div class="arrowdown">↓</div>
+            <div class="row">
+              <div class="tag">Underdeveloped</div>
+              <div class="to">Protection of persons <em>hors de combat</em> — POWs, dignity, contact, the record</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contrib stagger">
+        <div class="c">
+          <div class="n">01</div>
+          <h4>Reorient the discourse</h4>
+          <p>Move from Hague-law concerns about the conduct of hostilities toward Geneva-law concerns: the protection of individual human dignity in captivity.</p>
+        </div>
+        <div class="c">
+          <div class="n">02</div>
+          <h4>Adapt a threat model</h4>
+          <p>AIHL adapts the MAESTRO agentic-AI framework to assess the harm surface that synthetic media create for POW entitlements under GCIII.</p>
+        </div>
+        <div class="c">
+          <div class="n">03</div>
+          <h4>Lay the groundwork</h4>
+          <p>Found future technical and policy measures — this platform, red-teaming exercises, and governance mechanisms — to address the vulnerability before harms occur.</p>
+        </div>
+      </div>
+
+      <blockquote class="quote">
+        Just as much as the laws of war must become a political priority, so too must they become a sociotechnical priority on the part of all AI actors.
+        <cite>— On the case for a sociotechnical turn in red-teaming AI systems in armed conflict</cite>
+      </blockquote>
+
+      <div class="startblock stagger">
+        <div class="eyebrow">Explore the project</div>
+        <div class="indexgrid">
+          <button class="idxcard" data-goto="regime">
+            <div class="k">02 · The Problem</div>
+            <h4>A fragile information regime</h4>
+            <p>Why POW protection depends on records, contact, and identity staying valid, accessible, and attributable.</p>
+            <div class="go">Read on <span class="ar">→</span></div>
+          </button>
+          <button class="idxcard" data-goto="framework">
+            <div class="k">03 · The Model</div>
+            <h4>The AIHL framework</h4>
+            <p>Seven layers, six IHL adaptations, and six analytic steps for mapping where synthetic media threatens entitlements.</p>
+            <div class="go">See the model <span class="ar">→</span></div>
+          </button>
+          <button class="idxcard" data-goto="explorer">
+            <div class="k">04 · Explorer</div>
+            <h4>Walk a scenario</h4>
+            <p>Step through three worked cases as a responsible actor: decompose, map threats, trace the chain, mitigate.</p>
+            <div class="go">Open the explorer <span class="ar">→</span></div>
+          </button>
+          <button class="idxcard" data-goto="responsibility">
+            <div class="k">05 · Responsibility</div>
+            <h4>Who defends each layer</h4>
+            <p>A distributed-defense matrix that places the burden where capacity sits, and never on the victims.</p>
+            <div class="go">View the matrix <span class="ar">→</span></div>
+          </button>
+          <button class="idxcard" data-goto="research">
+            <div class="k">06 · Research</div>
+            <h4>The work behind it</h4>
+            <p>The peer-reviewed basis, the sociotechnical-turn argument, and where the project goes next.</p>
+            <div class="go">Read the research <span class="ar">→</span></div>
+          </button>
+          <button class="idxcard" data-goto="connect">
+            <div class="k">07 · Get involved</div>
+            <h4>Bring it to your work</h4>
+            <p>For AI labs, humanitarian institutions, and policymakers ready to pressure-test these protections.</p>
+            <div class="go">Get involved <span class="ar">→</span></div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- INFORMATION REGIME -->
+    <section class="view" id="view-regime">
+      <div class="section-head">
+        <div class="eyebrow">The protected interest</div>
+        <h2>The POW information regime</h2>
+        <p>POW protections do not depend on a single record. They depend on a fragile, distributed <em>information regime</em> that must satisfy three conditions to function at all.</p>
+      </div>
+
+      <div class="cards grid-3 cond stagger" style="margin-bottom:34px">
+        <div class="card">
+          <div class="ic">V</div>
+          <h4>Validity</h4>
+          <p>Information about POWs — records, communications, identifications — corresponds to reality.</p>
+        </div>
+        <div class="card">
+          <div class="ic">A</div>
+          <h4>Access</h4>
+          <p>Information can be readily reached by the right stakeholders: families, home and detaining states, the ICRC, and the prisoner themselves.</p>
+        </div>
+        <div class="card">
+          <div class="ic">P</div>
+          <h4>Attributability</h4>
+          <p>Information carries clear provenance, allowing it to be traced back to a legitimate actor.</p>
+        </div>
+      </div>
+
+      <div class="eyebrow" style="margin-bottom:12px">The pipeline · incorrect information cascades through the whole lifecycle</div>
+      <div class="pipe" id="pipe"></div>
+
+      <div class="asym">
+        <b>A structural power asymmetry.</b> <span class="muted" style="color:var(--paper-dim)">POWs, their families, and humanitarian personnel systematically lack the technical capacity to verify these conditions — while detaining states have the most capacity, and often the incentive, to fabricate information or disrupt its flow. Defenders must protect both the <em>instance layer</em> (the individual case, where harm is felt) and the <em>systemic layer</em> (the normative power of IHL itself), while attackers need only exploit the instance.</span>
+      </div>
+    </section>
+
+    <!-- FRAMEWORK -->
+    <section class="view" id="view-framework">
+      <div class="section-head">
+        <div class="eyebrow">The model</div>
+        <h2>The AIHL framework</h2>
+        <p>MAESTRO's seven-layer architecture maps cleanly onto the pipeline that produces POW-targeted synthetic media — data → model → orchestration → deployment → ecosystem. Six targeted adaptations re-anchor it on humanitarian outcomes and IHL.</p>
+      </div>
+
+      <div class="eyebrow" style="margin-bottom:12px">The seven layers</div>
+      <div class="layerstack stagger" id="fw-layers" style="margin-bottom:40px"></div>
+
+      <div class="eyebrow" style="margin-bottom:12px">What changes · MAESTRO → AIHL</div>
+      <div class="adapt" id="adapt"></div>
+
+      <div class="eyebrow" style="margin:42px 0 12px">The method · six analytic steps</div>
+      <div class="steps-ref" id="steps-ref"></div>
+    </section>
+
+    <!-- SCENARIO EXPLORER -->
+    <section class="view" id="view-explorer">
+      <div class="section-head">
+        <div class="eyebrow">Interactive walkthrough</div>
+        <h2>Scenario explorer</h2>
+        <p>Select a scenario, then step through the framework as a responsible actor would — decomposing the system, mapping threats across layers, tracing the attack chain, and assigning mitigations.</p>
+      </div>
+
+      <div class="scn-tabs" id="scn-tabs"></div>
+
+      <div class="exp">
+        <div>
+          <div class="scn-summary" id="scn-summary"></div>
+          <div class="stepbar" id="stepbar"></div>
+          <div class="step-panel" id="step-panel"></div>
+        </div>
+        <aside>
+          <div class="stack-side">
+            <div class="sluice">
+              <div class="slabel"><span>Layer stack</span><span id="stack-mode" class="mono" style="color:var(--accent-soft)"></span></div>
+              <div class="layerstack" id="exp-layers"></div>
+              <div class="legend" id="heat-legend" style="display:none">
+                <div class="l"><i style="background:var(--h1)"></i>Low</div>
+                <div class="l"><i style="background:var(--h2)"></i>Moderate</div>
+                <div class="l"><i style="background:var(--h3)"></i>High</div>
+                <div class="l"><i style="background:var(--h4)"></i>Critical</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- RESPONSIBILITY -->
+    <section class="view" id="view-responsibility">
+      <div class="section-head">
+        <div class="eyebrow">Distributed defense</div>
+        <h2>Who is the responsible actor?</h2>
+        <p>Decomposing the regime into layers reveals who is <em>best positioned</em> to defend each one. Responsibility is shared and continuous — and it never falls on the victims of harm.</p>
+      </div>
+
+      <div class="matrix-wrap">
+        <table class="matrix" id="resp-matrix"></table>
+      </div>
+      <div class="mx-legend">
+        <span class="h">Primary responsibility</span>
+        <div class="l"><i style="background:var(--surface-3)"></i>None</div>
+        <div class="l"><i style="background:var(--h1)"></i>Low</div>
+        <div class="l"><i style="background:var(--h2)"></i>Moderate</div>
+        <div class="l"><i style="background:var(--h3)"></i>High</div>
+        <div class="l"><i style="background:var(--h4)"></i>Primary</div>
+      </div>
+
+      <div class="keyinsight">
+        <div class="big">0<small>burden on victims</small></div>
+        <p>AIHL places <b>no requirements on the victims of harm</b>, who are least well positioned to defend against synthetic-media violations of their entitlements. Monitors first observe; institutions escalate; platforms interdict; developers harden — each in proportion to capacity, and each able to report safeguard failures upstream.</p>
+      </div>
+
+      <div class="disclaimer">A qualitative reading of best-positioned responsibility, drawn from the framework. Hover any cell to read the actor × function pairing.</div>
+    </section>
+
+    <!-- RESEARCH -->
+    <section class="view" id="view-research">
+      <div class="section-head">
+        <div class="eyebrow">The research</div>
+        <h2>The work behind the project</h2>
+        <p>The AIHL Project rests on a straightforward argument: the protection of people <em>hors de combat</em> deserves the same sociotechnical scrutiny the field already gives to the conduct of hostilities.</p>
+      </div>
+
+      <div class="research-grid stagger">
+        <div class="abstract">
+          <div class="eyebrow" style="margin-bottom:12px">Abstract</div>
+          <h3>A sociotechnical turn for the laws of war</h3>
+          <p>Debate over artificial intelligence in armed conflict has matured around <em>Hague law</em> — targeting, proportionality, weapons review, escalation. It has been near-silent on how the same technologies make war more inhumane for those already in custody.</p>
+          <p>This work reorients that debate toward <em>Geneva law</em>: the dignity, contact, and accurate record-keeping owed to prisoners of war. It shows how generative synthetic media can corrupt the fragile information regime on which POW protection depends, and adapts the MAESTRO agentic-AI threat-modeling framework into AIHL, an instrument that maps the harm surface across seven layers and six analytic steps.</p>
+          <p>Three worked scenarios — a propaganda deepfake, falsified capture cards, and an audio-cloned call to a prisoner's family — demonstrate the model, and a distributed-responsibility analysis assigns defensive obligations in proportion to capacity, never to the victims. AIHL's central demand is that AI actors treat the laws of war as a sociotechnical priority, not only a political one.</p>
+        </div>
+        <div class="paper-side">
+          <div class="paper-card">
+            <div class="eyebrow">The thesis</div>
+            <div class="ttl">On the case for a sociotechnical turn in red-teaming AI systems in armed conflict</div>
+            <div class="mm">Reorienting AI in armed conflict from the conduct of hostilities to the protection of persons hors de combat.</div>
+          </div>
+          <div class="paper-card">
+            <div class="eyebrow">At a glance</div>
+            <div class="mm">7 layers · 6 IHL adaptations<br>6 analytic steps · 3 worked scenarios<br>Grounded in GCIII &amp; customary IHL</div>
+          </div>
+          <div class="paper-card">
+            <div class="eyebrow">Reference</div>
+            <div class="cite">AIHL: A threat model for synthetic-media violations of prisoner-of-war protections under international humanitarian law. The AIHL Project, 2026.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fw">
+        <div class="eyebrow" style="margin-bottom:4px">Where it goes next</div>
+        <div class="fwgrid">
+          <div class="fwitem">
+            <div class="n">01</div>
+            <h4>Scenario library</h4>
+            <p>An openly navigable, growing library of worked cases, expanding as new synthetic-media threats are analysed.</p>
+          </div>
+          <div class="fwitem">
+            <div class="n">02</div>
+            <h4>Red-teaming exercises</h4>
+            <p>Operationalizing AIHL as adversarial evaluation against frontier models, with structured probes and scoring.</p>
+          </div>
+          <div class="fwitem">
+            <div class="n">03</div>
+            <h4>Governance mechanisms</h4>
+            <p>Folding synthetic-media harms into IHL governance, accountability, and cross-actor reporting before harms occur.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GET INVOLVED -->
+    <section class="view" id="view-connect">
+      <div class="section-head">
+        <div class="eyebrow">Get involved</div>
+        <h2>Pressure-test the protections, before they fail</h2>
+        <p>AIHL is built to be used. It is most valuable in the hands of the actors best positioned to find and close these gaps in their own systems and mandates.</p>
+      </div>
+
+      <div class="connect-lead stagger">
+        <div>
+          <p class="lede">The harm surface here is foreseeable, which means it is <strong>preventable</strong>. Whether you build the models, safeguard the platforms, hold the humanitarian mandate, or write the rules, AIHL gives you a shared language for naming where synthetic media threatens prisoner-of-war protections — and a method for deciding what to do about it.</p>
+        </div>
+        <div class="audience">
+          <div class="aud"><span class="ab">AI labs</span><div class="ad"><b>Model developers &amp; deployers</b><p>Harden generative pipelines against the jailbreaks and misuse pathways the scenarios trace.</p></div></div>
+          <div class="aud"><span class="ab">Platforms</span><div class="ad"><b>Distribution &amp; provenance owners</b><p>Detect and interdict synthetic POW media before it reaches families, states, and the record.</p></div></div>
+          <div class="aud"><span class="ab">Humanitarian</span><div class="ad"><b>Institutions &amp; monitors</b><p>Anchor evaluation on humanitarian outcomes and escalate failures of the information regime.</p></div></div>
+          <div class="aud"><span class="ab">Policy</span><div class="ad"><b>Policymakers &amp; regulators</b><p>Bring record-integrity and dignity harms explicitly into IHL governance and accountability.</p></div></div>
+        </div>
+      </div>
+
+      <div class="engage">
+        <div class="eyebrow" style="margin-bottom:4px">How engagement works</div>
+        <div class="erow">
+          <div class="estep">
+            <div class="num">1</div>
+            <h4>Scope</h4>
+            <p>A briefing maps AIHL onto your systems, mandate, or portfolio and identifies the layers most exposed.</p>
+          </div>
+          <div class="estep">
+            <div class="num">2</div>
+            <h4>Evaluate</h4>
+            <p>Worked scenarios and red-teaming exercises pressure-test those layers against realistic adversaries.</p>
+          </div>
+          <div class="estep">
+            <div class="num">3</div>
+            <h4>Operationalize</h4>
+            <p>Findings become concrete mitigations and monitoring, assigned in proportion to your capacity.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-box">
+        <div class="ctl">
+          <h3>Bring AIHL to your organization.</h3>
+          <p>Request a briefing, propose a red-teaming engagement, or talk through how the framework applies to your work.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn primary" href="mailto:hello@example.org?subject=The%20AIHL%20Project">Request a briefing <span class="editable">[ contact ]</span></a>
+          <button class="btn ghost" data-goto="explorer">Open the explorer →</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="fb">
+        <div class="mark"></div>
+        <div class="nm">The <b>AIHL</b> Project</div>
+      </div>
+      <p>A threat model and research initiative on how generative synthetic media threatens the protections owed to prisoners of war under international humanitarian law — built so the harm becomes foreseeable, and therefore preventable.</p>
+    </div>
+    <div class="foot-col">
+      <h5>Explore</h5>
+      <button data-goto="overview">Overview</button>
+      <button data-goto="regime">The Problem</button>
+      <button data-goto="framework">The Model</button>
+      <button data-goto="explorer">Scenario Explorer</button>
+      <button data-goto="responsibility">Responsibility</button>
+    </div>
+    <div class="foot-col">
+      <h5>Engage</h5>
+      <button data-goto="research">Research</button>
+      <button data-goto="connect">Get involved</button>
+      <a href="mailto:hello@example.org?subject=The%20AIHL%20Project">Request a briefing</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="fbi">
+      <div class="mono">&copy; 2026 The AIHL Project</div>
+      <div class="mono"><span class="editable">[ contact ]</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   AIHL — data layer
+   ============================================================ */
+const VIEWS = [
+  {id:'overview',      label:'Overview',       idx:'01'},
+  {id:'regime',        label:'The Problem',    idx:'02'},
+  {id:'framework',     label:'The Model',      idx:'03'},
+  {id:'explorer',      label:'Explorer',       idx:'04'},
+  {id:'responsibility',label:'Responsibility', idx:'05'},
+  {id:'research',      label:'Research',       idx:'06'},
+];
+
+const LAYERS = [
+  {id:'L1', name:'Foundation Models',        sub:'The generative model(s) producing synthetic video, image, or audio.'},
+  {id:'L2', name:'Data Operations',          sub:'Ingestion, storage, retrieval, and provenance — incl. authentic source media and POW records.'},
+  {id:'L3', name:'Agent Frameworks',         sub:'Orchestration of adversarial technique: jailbreak toolkits, manipulation strategies, automation.'},
+  {id:'L4', name:'Deployment Infrastructure',sub:'Capacity to deliver and distribute the artifact — compute, bot networks, channels.'},
+  {id:'L5', name:'Evaluation & Observability',sub:'Provenance, chain of custody, logging, auditing — recast around humanitarian outcomes.'},
+  {id:'L6', name:'Security & Compliance',    sub:'The governing legal regime: GCIII and customary IHL, as primary design constraints.'},
+  {id:'L7', name:'Agent Ecosystem',          sub:'The full stakeholder set — POWs, families, states, ICRC, platforms — and adversaries.'},
+];
+const LNAME = Object.fromEntries(LAYERS.map(l=>[l.id,l.name]));
+
+const ADAPTATIONS = [
+  {layer:'L5', name:'Evaluation & Observability',
+   maestro:'Monitors agent behaviour and measures the system against performance metrics such as accuracy, latency, and reliability.',
+   x:'Performance metrics are replaced by humanitarian outcomes — verified POW status, maintained contact, accurate repatriation — with specific IHL articles operationalised as evaluation criteria.',
+   why:'In armed conflict the protected interest is the realisation of legal entitlements, not technical performance; a model optimising operational metrics cannot detect when a legal protection has failed.'},
+  {layer:'L7', name:'Agent Ecosystem — stakeholders',
+   maestro:'Enumerates the agents, services, and human actors surrounding a deployed system.',
+   x:'The stakeholder set extends beyond engineering and operational actors to legal subjects (POWs, families) and humanitarian intermediaries (ICRC, National Information Bureaux, Central Tracing Agency).',
+   why:'These parties hold enforceable informational entitlements under GCIII (Arts. 70–71, 122–123) yet have no system access; a defender-centred ecosystem renders the very subjects IHL protects invisible.'},
+  {layer:'L7', name:'Agent Ecosystem — threat actors',
+   maestro:'Identifies the adversaries operating within or against the system environment.',
+   x:'The adversary model accommodates the belligerent–belligerent relationship: the synthetic-media “deployer” may be a state or organised armed group, not only a lone malicious actor accountable to a state army.',
+   why:'State and organised-group adversaries command industrial-scale generation capacity and face no neutral system owner — conditions MAESTRO’s commercial-misuse adversary model does not anticipate.'},
+  {layer:'—', name:'Lifecycle scope',
+   maestro:'Bounds threat analysis to a single deployment lifecycle: design-time, runtime, and observation.',
+   x:'The temporal model spans the full POW lifecycle — capture, internment, monitoring, and post-repatriation reintegration — within one analysis.',
+   why:'POW harms compound and cascade across custodial phases: a corrupted record at registration propagates to tracing, correspondence, and repatriation, beyond any single deployment window.'},
+  {layer:'L6', name:'Security & Compliance',
+   maestro:'Encodes security controls and the external regulatory requirements a system must satisfy.',
+   x:'IHL primary rules (GCIII Arts. 13, 17, 70–71, 76, 122–123) and customary IHL (Rules 90, 99, 105, 123) are encoded as primary design constraints.',
+   why:'In armed conflict IHL is the governing legal regime, not one regulatory input among many; compliance defines the threat surface itself rather than bounding it after the fact.'},
+  {layer:'L2', name:'Data Operations',
+   maestro:'Governs data ingestion, storage, retrieval, and provenance across the agent pipeline.',
+   x:'The harm model is extended so that the plausibility of fabrication counts as harm, not only realised fabrication.',
+   why:'Loss of verifiable authenticity degrades the regime even absent a specific synthetic artifact — the liar’s dividend — so a harm model triggered only by produced fakes systematically under-counts the damage.'},
+];
+
+const STEPS = [
+  {n:1, key:'decomposition', name:'System Decomposition',       mode:'NEUTRAL', blurb:'Break the scenario into the seven AIHL layers — what each layer is, in this case.'},
+  {n:2, key:'threats',       name:'Layer Threat Mapping',       mode:'THREAT',  blurb:'Identify the scenario-specific threat at each layer, and how severe it is.'},
+  {n:3, key:'crossLayer',    name:'Cross-Layer Threats',        mode:'CHAIN',   blurb:'Trace how threats connect — the attack chain from jailbreak to humanitarian harm.'},
+  {n:4, key:'priority',      name:'Risk Prioritization',        mode:'PRIORITY',blurb:'Rank the highest-risk threats to both the individual and the regime.'},
+  {n:5, key:'mitigation',    name:'Risk Mitigation',            mode:'MITIGATE',blurb:'Assign technical and policy measures at the layer level.'},
+  {n:6, key:'monitoring',    name:'Monitoring & Implementation',mode:'LOOP',    blurb:'Sustain coverage through continuous, distributed, automated and human-in-the-loop review.'},
+];
+
+const PIPELINE = [
+  {idx:'01', stage:'Capture', sub:'Combatant is captured and recorded.',
+   info:['Identity (name, aliases, rank, service no.)','Unit / formation','Date & time of capture','Location & circumstances','Capturing unit','Physical description','Initial interrogation summary','Status / category']},
+  {idx:'02', stage:'Internment', sub:'POW is processed and assigned to a camp.',
+   info:['Camp / compound assignment','Date of arrival, internment number','Room / barrack / block','Work assignment','Clearance / privileges','Health & medical records','Disciplinary records','Transfers (dates, from/to)']},
+  {idx:'03', stage:'Monitoring & Correspondence', sub:'POW is monitored; messages flow.',
+   info:['Roll calls / presence','Conduct & work-performance reports','Visits / interviews','Red Cross messages (sent & received)','Letters (metadata: date, to/from, language)','Censorship decisions','Packages received','Health updates']},
+  {idx:'04', stage:'Repatriation', sub:'POW is released and returned home.',
+   info:['Date of release','Place / port of repatriation','Repatriation transport','Destination (country / camp)','Final camp of internment','Condition on release (health/welfare)','Personal effects returned','Debriefing summary']},
+  {idx:'05', stage:'Reparation', sub:'Claims and post-war settlement.',
+   info:['Proof of captivity (dates, camps, authorities)','Duration of internment','Labor / service details','Losses / damages claimed','Entitlements assessed','Payments / compensation','Certificates / documentation','Case outcomes']},
+];
+
+/* threat levels: 1 Low · 2 Moderate · 3 High · 4 Critical */
+const SCENARIOS = [
+  {
+    sx:'Scenario 01', title:'Deepfake video of POWs used as propaganda',
+    entitlement:'Protection from public curiosity', articles:['GCIII Art. 13'],
+    summary:'A belligerent state films a POW asking only benign questions (name, offer of water and food). Its Cyber Division, under the Ministry of Intelligence, uses a popular generative tool to alter the footage into a propagandistic deepfake in which the prisoner praises his captors and condemns his home country as evil and imperialistic. The video is released online and spreads rapidly through news and social channels.',
+    decomposition:{
+      L1:'A general-purpose generative AI tool capable of high-fidelity video synthesis.',
+      L2:'The data required to generate the fake — here, an authentic recorded video / photo of the prisoner.',
+      L3:'The adversarial techniques and data-manipulation strategy used to drive the model.',
+      L4:'The belligerent’s capacity, in the cloud or elsewhere, to deploy and amplify the harmful video.',
+      L5:'Provenance, chain of custody, and the logging / auditing features (largely absent) for the media.',
+      L6:'GCIII and customary IHL — the protections against public curiosity that govern this content.',
+      L7:'The online environments (social media, news, distribution) and stakeholders: families, governments, the ICRC and global institutions.'
+    },
+    threats:{
+      L1:{lvl:4, t:'The generative tool is manipulated into producing the deepfake video through adversarial tactics — a breakdown in model safeguards.'},
+      L2:{lvl:3, t:'The evidentiary chain is corrupted: a synthetic video is built on an authentic recording of the prisoner.'},
+      L3:{lvl:3, t:'The belligerent assembles a sophisticated jailbreaking toolkit to carry out the attacks needed to create the deepfake.'},
+      L4:{lvl:4, t:'The video is spread online via information-warfare assets — bot armies and fake social-media accounts — engineered for reach.'},
+      L5:{lvl:4, t:'With no provenance, chain of custody, or logging for synthetic-media harms against POWs, there is near-zero insight into the attack.'},
+      L6:{lvl:3, t:'GCIII and customary IHL protections against the use of prisoners for propaganda and public curiosity are directly undermined.'},
+      L7:{lvl:4, t:'Harm lands at the family level, the state level (home country, commanding branch), and the international governance level — shaping global opinion.'}
+    },
+    chain:[
+      {id:'L3', b:'Jailbreak toolkit', t:'Adversarial orchestration defeats the model’s guardrails.'},
+      {id:'L1', b:'Deepfake produced', t:'The generative tool outputs a propaganda video.'},
+      {id:'L2', b:'Evidentiary chain corrupted', t:'An authentic recording is converted into a synthetic artifact.'},
+      {id:'L4', b:'Mass distribution', t:'Bot networks push the video across news and social media.'},
+      {id:'L7', b:'Stakeholder & IHL harm', t:'Families, states, and the ICRC are reached; Art. 13 is violated.'}
+    ],
+    chainNote:'Gaps in Evaluation & Observability (L5) run beneath the whole chain: absent provenance and logging, the synthetic artifact passes through undetected, reinforcing the weaknesses in L1–L3.',
+    priority:[
+      {t:'Breakdown in model safeguards', d:'The foundation model can be driven to produce the deepfake at all.', tags:['L1']},
+      {t:'Insufficient provenance for video', d:'No chain of custody from the point of recording to genAI ingestion and downstream use.', tags:['L5','L2']},
+      {t:'Weak oversight of the pipeline', d:'Little visibility as content flows from state actors toward ICRC infrastructure.', tags:['L7']},
+    ],
+    prioFocus:'Particular focus on strengthened provenance and audit logs for video files — from the point of origin (recording the POW) through injection into generative tools and downstream impact on the evidentiary chain.',
+    mitigation:[
+      {id:'L1', t:'Adversarial training so models resist jailbreaks that produce deepfakes.'},
+      {id:'L3', t:'Continuous red-teaming of the generative pipeline, including before release.'},
+      {id:'L5', t:'Rigorous provenance audits and audit logs across the media lifecycle.'},
+      {id:'L6', t:'Governance reform: explicit inclusion of synthetic-media harms in IHL, with accountability to make protections endure.'},
+    ],
+  },
+  {
+    sx:'Scenario 02', title:'Deepfake capture cards falsifying POW records',
+    entitlement:'Accurate record-keeping & traceability', articles:['GCIII Art. 17','Art. 71','Art. 122','Art. 123'],
+    summary:'Having captured a number of POWs, a state belligerent’s Office of External Information (Ministry of Foreign Affairs) uses customized generative tools, automated jailbreaking, and mass image generation to fabricate dozens of synthetic capture cards — falsifying the prisoners’ current health, exact dates of capture, and the addresses of detention camps. The deepfaked cards are transmitted to commanding branches, families, and the ICRC, feeding the “liar’s dividend”: real records are doubted, fakes are trusted.',
+    decomposition:{
+      L1:'A generative AI tool, customized for document / image synthesis.',
+      L2:'The data required to generate the synthetic capture cards — POW records, including personally identifying information.',
+      L3:'Adversarial techniques plus mass automation of jailbreaks and deepfaked-card production.',
+      L4:'The belligerent’s capacity to deploy and transmit the falsified cards.',
+      L5:'Provenance, chain of custody, and logging / auditing for the records (largely absent).',
+      L6:'GCIII and customary IHL — the record-keeping obligations that govern this data.',
+      L7:'Online environments and stakeholders: families, governments, and the ICRC tracing division.'
+    },
+    threats:{
+      L1:{lvl:4, t:'The generative tool is manipulated into producing deepfake capture cards through adversarial tactics.'},
+      L2:{lvl:4, t:'The evidentiary chain is corrupted: synthetic cards are built on real POW records, including PII — the core harm.'},
+      L3:{lvl:4, t:'A sophisticated jailbreaking toolkit enables automated, batch generation of falsified cards at scale.'},
+      L4:{lvl:2, t:'Cards are transmitted to specific recipients (branches, families, ICRC) rather than broadcast for reach.'},
+      L5:{lvl:4, t:'Absent provenance and chain of custody for records, falsifications cannot be distinguished from genuine cards.'},
+      L6:{lvl:3, t:'GCIII and customary IHL provisions protecting POW record-keeping (Arts. 17, 71, 122, 123) are undermined.'},
+      L7:{lvl:3, t:'Harm reaches families and states, and corrupts the ICRC tracing division — degrading the truth of the legal record itself.'}
+    },
+    chain:[
+      {id:'L3', b:'Mass-automated jailbreak', t:'Batch orchestration defeats guardrails at scale.'},
+      {id:'L1', b:'Synthetic cards produced', t:'The model outputs dozens of falsified capture cards.'},
+      {id:'L2', b:'Record / PII corruption', t:'Real records are overwritten with fabricated detail.'},
+      {id:'L4', b:'Transmission', t:'Cards reach commanding branches, families, and the ICRC.'},
+      {id:'L7', b:'Tracing corrupted', t:'ICRC tracing is degraded; the liar’s dividend takes hold.'}
+    ],
+    chainNote:'Eval & Observability gaps (L5) sit beneath the chain: without record provenance, the corruption of genuine media (PII belonging to POWs) is invisible, and the agent-framework tooling keeps succeeding.',
+    priority:[
+      {t:'Safeguard breakdown under mass automation', d:'Guardrails fail at batch scale, enabling dozens of fakes.', tags:['L1','L3']},
+      {t:'Provenance for POW PII and records', d:'No way to authenticate a capture card against a genuine source.', tags:['L5','L2']},
+      {t:'Weak oversight of record-keeping', d:'Falsified records flow unchecked toward ICRC tracing.', tags:['L7']},
+    ],
+    prioFocus:'Provenance measures for POW PII, together with stronger oversight of record-keeping processes, are a particular focus for responsible actors at this step.',
+    mitigation:[
+      {id:'L1', t:'Adversarial training to resist mass-automated jailbreaks of document synthesis.'},
+      {id:'L3', t:'Continuous red-teaming targeting batch image-generation abuse.'},
+      {id:'L5', t:'Provenance for records and stronger oversight / audit of record-keeping processes.'},
+      {id:'L6', t:'Inclusion of record-integrity harms in IHL governance and accountability processes.'},
+    ],
+  },
+  {
+    sx:'Scenario 03', title:'Audio-cloned POW phone call to family',
+    entitlement:'Contact with the outside world', articles:['GCIII Art. 71','Art. 76'],
+    summary:'A non-state belligerent kidnaps a member of a state’s special forces during a failed raid. Its Revolutionary Cyber Unit exploits the voice mode of a popular generative tool to clone the prisoner’s voice and uses it in a live phone call with his family. The cloned voice claims fair, humane treatment and good health — while in reality the POW is being tortured and starved. The fake call enters the evidentiary record for the family, the state’s security apparatus, and ICRC record-keeping.',
+    decomposition:{
+      L1:'A generative AI tool — specifically its voice / speech model.',
+      L2:'The data required to generate the synthetic media — audio of the prisoner’s voice, captured by the captors.',
+      L3:'Adversarial techniques and manipulation strategy used to drive voice cloning.',
+      L4:'The capacity to deploy the cloned audio as a live communication delivered to stakeholders.',
+      L5:'Provenance and chain of custody across both the original recording and any later alteration.',
+      L6:'GCIII and customary IHL — the obligations to maintain contact with the outside world.',
+      L7:'Online / communication environments and stakeholders: family, the state, the commanding branch, and the ICRC.'
+    },
+    threats:{
+      L1:{lvl:4, t:'The voice model is manipulated into producing the clone through adversarial tactics.'},
+      L2:{lvl:4, t:'The evidentiary chain is corrupted: an audio clone of the prisoner is used to transmit false information about his health and status.'},
+      L3:{lvl:3, t:'The belligerent assembles a jailbreaking toolkit to exploit the tool’s voice mode.'},
+      L4:{lvl:3, t:'The cloned audio is delivered as a live phone call — synthetic media used inside a real-time channel, not just a stored file.'},
+      L5:{lvl:4, t:'Absent provenance across recording and live alteration, neither the family nor the ICRC can establish authenticity.'},
+      L6:{lvl:3, t:'GCIII protections of contact with the outside world (Arts. 71, 76) are undermined, threatening post-war reintegration.'},
+      L7:{lvl:3, t:'Harm reaches the family, the state’s security apparatus, and ICRC record-keeping — and inflicts acute emotional damage.'}
+    },
+    chain:[
+      {id:'L3', b:'Voice-mode jailbreak', t:'Adversarial orchestration exploits the tool’s voice model.'},
+      {id:'L1', b:'Voice cloned', t:'The model reproduces the prisoner’s voice.'},
+      {id:'L2', b:'False status transmitted', t:'The clone asserts good health and humane treatment.'},
+      {id:'L4', b:'Live call to family', t:'Synthetic audio is used inside a real-time communication.'},
+      {id:'L7', b:'Record & family harmed', t:'The fake enters the evidentiary record; the family is deceived.'}
+    ],
+    chainNote:'Highest-risk tracing here follows provenance to both the captors’ original recording and any alterations made downstream — including the use of the clone in live communication, not only stored deepfakes.',
+    priority:[
+      {t:'Voice-model safeguard breakdown', d:'Guardrails fail to prevent cloning from the tool’s voice mode.', tags:['L1']},
+      {t:'Provenance across recording and live alteration', d:'No chain of custody from captor recording through real-time use.', tags:['L5','L2']},
+      {t:'Weak oversight of contact channels', d:'Falsified contact flows unchecked to family and the ICRC.', tags:['L7']},
+    ],
+    prioFocus:'Added focus on tracing the chain of provenance to both the captors’ recording of the prisoner and any alterations made to those recordings as they move downstream — including their use in live communications.',
+    mitigation:[
+      {id:'L1', t:'Adversarial training of voice models to resist cloning jailbreaks.'},
+      {id:'L5', t:'Provenance tracing across captor recording and downstream alteration, covering live communications, not only stored fakes.'},
+      {id:'L3', t:'Continuous red-teaming of voice-mode pathways.'},
+      {id:'L6', t:'Inclusion of contact-integrity harms in IHL governance and accountability.'},
+    ],
+  },
+];
+
+/* shared monitoring step content */
+const MONITORING = {
+  loop:[
+    {ic:'01', b:'Automated red-teaming', d:'Continuous, machine-driven probing of the generative pipeline for new failure modes.'},
+    {ic:'02', b:'Human-in-the-loop review', d:'Expert review where legal and humanitarian judgement is required.'},
+    {ic:'03', b:'Regular cross-actor review', d:'Recurring review spanning ICRC, government, and private stakeholders.'},
+    {ic:'04', b:'Institutional reporting', d:'Findings folded into plenary reporting and global accountability mechanisms.'},
+  ],
+  actors:['ICRC','Governments','AI labs & deployers','Platforms','Humanitarian monitors'],
+  text:'Continuous implementation, monitoring, and iteration — through automated and human-in-the-loop red-teaming and regular review — across global, regional, interdepartmental, and industry-wide dialogues on POW deepfakes.'
+};
+
+const RESP = {
+  functions:['Documentation','Detection','Escalation','Interdiction','Hardening'],
+  actors:[
+    {name:'Belligerent states', role:'detaining powers', v:[4,1,1,1,1]},
+    {name:'AI model developers', role:'& system deployers', v:[1,2,2,2,4]},
+    {name:'Platform owners', role:'e.g. Meta', v:[1,2,2,4,2]},
+    {name:'Humanitarian institutions', role:'e.g. ICRC', v:[3,2,4,1,1]},
+    {name:'Humanitarian monitors', role:'e.g. Human Rights Watch', v:[1,4,3,1,1]},
+    {name:'POW victims & families', role:'no defensive burden', v:[0,0,0,0,0]},
+  ]
+};
+
+const HEAT = {1:'var(--h1)',2:'var(--h2)',3:'var(--h3)',4:'var(--h4)'};
+const HEAT_LBL = {1:'Low',2:'Moderate',3:'High',4:'Critical'};
+const HEAT_SOLID = {0:'var(--surface-3)',1:'var(--h1)',2:'var(--h2)',3:'var(--h3)',4:'var(--h4)'};
+
+/* ============================================================
+   state + controller
+   ============================================================ */
+const state = { view:'overview', scenario:0, step:1 };
+
+function setView(id){
+  state.view = id;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('show'));
+  const v = document.getElementById('view-'+id);
+  if(v) v.classList.add('show');
+  document.querySelectorAll('#navlinks button').forEach(b=>b.classList.toggle('active', b.dataset.view===id));
+  // restart stagger animation
+  v && v.querySelectorAll('.stagger').forEach(s=>{
+    [...s.children].forEach((c,i)=>{ c.style.animation='none'; c.offsetHeight; c.style.animation=''; c.style.animationDelay=(i*0.06)+'s'; });
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---- nav ---- */
+function buildNav(){
+  const n = document.getElementById('navlinks');
+  n.innerHTML = VIEWS.map(v=>`<button data-view="${v.id}"><span>${v.idx}</span> ${v.label}</button>`).join('');
+  n.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
+  document.querySelector('.brand').addEventListener('click',()=>setView('overview'));
+}
+
+/* ---- info regime pipeline ---- */
+function buildPipeline(){
+  const p = document.getElementById('pipe');
+  p.innerHTML = PIPELINE.map((s,i)=>`
+    <div class="stage">
+      <div class="stage-card" data-stage="${i}">
+        <div class="idx">${s.idx}</div>
+        <h4>${s.stage}</h4>
+        <div class="sub">${s.sub}</div>
+        <div class="more">+ information produced</div>
+      </div>
+      <div class="arrow">→</div>
+    </div>`).join('') + `<div class="stage-detail" id="stage-detail"></div>`;
+  let open = -1;
+  p.querySelectorAll('.stage-card').forEach(c=>{
+    c.addEventListener('click',()=>{
+      const i = +c.dataset.stage;
+      const det = document.getElementById('stage-detail');
+      p.querySelectorAll('.stage-card').forEach(x=>x.classList.remove('open'));
+      if(open===i){ det.classList.remove('show'); open=-1; return; }
+      open=i; c.classList.add('open');
+      const s = PIPELINE[i];
+      det.innerHTML = `<h4>${s.idx} · ${s.stage} — information produced</h4>
+        <div class="muted" style="font-size:13px">Each item below is data the regime must keep valid, accessible, and attributable. A corruption here cascades downstream.</div>
+        <div class="chips">${s.info.map(x=>`<span>${x}</span>`).join('')}</div>`;
+      det.classList.add('show');
+      det.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
+  });
+}
+
+/* ---- framework: reference layer stack ---- */
+function buildFwLayers(){
+  const wrap = document.getElementById('fw-layers');
+  wrap.innerHTML = LAYERS.map(l=>`
+    <div class="layer" data-l="${l.id}">
+      <div class="lid">${l.id}</div>
+      <div>
+        <div class="lname">${l.name}</div>
+        <div class="lsub">${l.sub}</div>
+      </div>
+      <div class="lright"><div class="chev">›</div></div>
+      <div class="layer-detail"></div>
+    </div>`).join('');
+  wrap.querySelectorAll('.layer').forEach(row=>{
+    const id = row.dataset.l;
+    const ad = ADAPTATIONS.filter(a=>a.layer===id);
+    const det = row.querySelector('.layer-detail');
+    det.innerHTML = ad.length
+      ? `<div class="meta">AIHL adaptation</div>${ad.map(a=>`<div style="margin-bottom:8px"><b style="font-family:Fraunces,serif">${a.name}.</b> ${a.x}</div>`).join('')}`
+      : `<div class="meta">No IHL-specific adaptation</div><div>This layer is used as defined in MAESTRO.</div>`;
+    row.addEventListener('click',()=>row.classList.toggle('expanded'));
+  });
+}
+
+/* ---- framework: adaptation cards ---- */
+function buildAdapt(){
+  const wrap = document.getElementById('adapt');
+  wrap.innerHTML = ADAPTATIONS.map(a=>`
+    <div class="a">
+      <div class="layer-tag"><span class="lid">${a.layer}</span>${a.name}</div>
+      <div class="top">
+        <div class="cell maestro"><div class="label m">MAESTRO baseline</div><p>${a.maestro}</p></div>
+        <div class="cell"><div class="label x">AIHL</div><p>${a.x}</p></div>
+      </div>
+      <div class="why"><b>Why</b><span>${a.why}</span></div>
+    </div>`).join('');
+}
+
+/* ---- framework: steps reference ---- */
+function buildStepsRef(){
+  const wrap = document.getElementById('steps-ref');
+  wrap.innerHTML = STEPS.map(s=>`
+    <div class="s">
+      <div class="num">${s.n}</div>
+      <div class="k">Step ${s.n}</div>
+      <h4>${s.name}</h4>
+      <p>${s.blurb}</p>
+    </div>`).join('');
+}
+
+/* ============================================================
+   Scenario explorer
+   ============================================================ */
+function buildScnTabs(){
+  const wrap = document.getElementById('scn-tabs');
+  wrap.innerHTML = SCENARIOS.map((s,i)=>`
+    <button class="scn-tab ${i===state.scenario?'active':''}" data-s="${i}">
+      <div class="sx">${s.sx}</div>
+      <h4>${s.title}</h4>
+      <div class="ent">▸ ${s.entitlement}</div>
+      <div class="arts">${s.articles.map(a=>`<span>${a}</span>`).join('')}</div>
+    </button>`).join('');
+  wrap.querySelectorAll('.scn-tab').forEach(b=>b.addEventListener('click',()=>{
+    state.scenario=+b.dataset.s; state.step=1; renderExplorer();
+  }));
+}
+
+function buildStepBar(){
+  const wrap = document.getElementById('stepbar');
+  wrap.innerHTML = STEPS.map(s=>`
+    <button class="${s.n===state.step?'active':''}" data-step="${s.n}">
+      <span class="n">${s.n}</span> ${s.name}
+    </button>`).join('');
+  wrap.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    state.step=+b.dataset.step; renderExplorer();
+  }));
+}
+
+function layerRow(id, opts){
+  // opts: {detailHTML, level, dim, active, prio, expandable}
+  const l = LAYERS.find(x=>x.id===id);
+  const heat = opts.level ? `<div class="heat"><span class="lbl">${HEAT_LBL[opts.level]}</span><span class="dot" style="background:${HEAT[opts.level]}"></span></div>` : '';
+  const prio = opts.prio ? `<span class="prio-flag">priority</span>` : '';
+  const chev = opts.expandable ? `<div class="chev">›</div>` : '';
+  return `<div class="layer ${opts.dim?'dim':''} ${opts.active?'active':''}" data-l="${id}" ${opts.expandable?'data-exp="1"':''}>
+      <div class="lid">${id}</div>
+      <div>
+        <div class="lname">${l.name}</div>
+        <div class="lsub">${opts.sub || l.sub}</div>
+      </div>
+      <div class="lright">${prio}${heat}${chev}</div>
+      ${opts.detailHTML!==undefined?`<div class="layer-detail">${opts.detailHTML}</div>`:''}
+    </div>`;
+}
+
+function renderStack(){
+  const wrap = document.getElementById('exp-layers');
+  const mode = STEPS[state.step-1].mode;
+  document.getElementById('stack-mode').textContent = mode;
+  const legend = document.getElementById('heat-legend');
+  legend.style.display = (mode==='THREAT'||mode==='CHAIN'||mode==='PRIORITY') ? 'flex' : 'none';
+  const scn = SCENARIOS[state.scenario];
+
+  let rows='';
+  if(mode==='NEUTRAL'){
+    rows = LAYERS.map(l=>layerRow(l.id,{sub:scn.decomposition[l.id], expandable:false})).join('');
+  } else if(mode==='THREAT'){
+    rows = LAYERS.map(l=>layerRow(l.id,{level:scn.threats[l.id].lvl, sub:l.sub, expandable:true, detailHTML:`<div class="meta">${LNAME[l.id]} · ${HEAT_LBL[scn.threats[l.id].lvl]} threat</div>${scn.threats[l.id].t}`})).join('');
+  } else if(mode==='CHAIN'){
+    const inChain = new Set(scn.chain.map(c=>c.id));
+    rows = LAYERS.map(l=>layerRow(l.id,{level: inChain.has(l.id)? scn.threats[l.id].lvl : null, dim:!inChain.has(l.id), active:inChain.has(l.id), sub:l.sub})).join('');
+  } else if(mode==='PRIORITY'){
+    const prioSet = new Set(scn.priority.flatMap(p=>p.tags));
+    rows = LAYERS.map(l=>layerRow(l.id,{level: prioSet.has(l.id)? scn.threats[l.id].lvl:null, prio:prioSet.has(l.id), dim:!prioSet.has(l.id), sub:l.sub})).join('');
+  } else if(mode==='MITIGATE'){
+    const mitSet = new Set(scn.mitigation.map(m=>m.id));
+    rows = LAYERS.map(l=>{
+      const m = scn.mitigation.find(x=>x.id===l.id);
+      return layerRow(l.id,{active:mitSet.has(l.id), dim:!mitSet.has(l.id), expandable:!!m, sub:l.sub, detailHTML: m?`<div class="meta">Mitigation</div>${m.t}`:undefined});
+    }).join('');
+  } else { // LOOP
+    rows = LAYERS.map(l=>layerRow(l.id,{dim:true, sub:l.sub})).join('');
+  }
+  wrap.innerHTML = rows;
+  wrap.querySelectorAll('.layer[data-exp="1"]').forEach(row=>{
+    row.addEventListener('click',()=>row.classList.toggle('expanded'));
+  });
+}
+
+function renderStepPanel(){
+  const scn = SCENARIOS[state.scenario];
+  const step = STEPS[state.step-1];
+  const panel = document.getElementById('step-panel');
+  let body='';
+
+  if(step.mode==='NEUTRAL'){
+    body = `<p class="muted" style="font-size:14px;margin:0 0 4px">Responsible actors break the scenario into seven layers. Each layer below names what that component <em>is</em> in this case — explore the same layers on the stack at right.</p>
+      <div class="ranklist" style="margin-top:16px">
+        ${LAYERS.map(l=>`<div class="r"><div class="rk" style="font-size:13px;font-family:'IBM Plex Mono',monospace;color:var(--accent-soft)">${l.id}</div><div class="rt"><b>${l.name}</b><span>${scn.decomposition[l.id]}</span></div></div>`).join('')}
+      </div>`;
+  } else if(step.mode==='THREAT'){
+    body = `<p class="muted" style="font-size:14px;margin:0 0 4px">For each layer, responsible actors identify the scenario-specific threat and gauge its severity. Severity drives the heat on the stack at right.</p>
+      <div class="ranklist" style="margin-top:16px">
+        ${LAYERS.map(l=>{const th=scn.threats[l.id];return `<div class="r"><div class="rk" style="font-size:13px;font-family:'IBM Plex Mono',monospace;color:var(--accent-soft)">${l.id}</div><div class="rt"><b style="display:flex;align-items:center;gap:9px">${l.name} <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);background:${HEAT[th.lvl]};padding:2px 7px;border-radius:3px">${HEAT_LBL[th.lvl]}</span></b><span>${th.t}</span></div></div>`}).join('')}
+      </div>`;
+  } else if(step.mode==='CHAIN'){
+    body = `<p class="muted" style="font-size:14px;margin:0 0 14px">Responsible actors hunt across layers to construct the attack chain — flowing from the generative jailbreak to humanitarian harm.</p>
+      <div class="chain">
+        ${scn.chain.map((c,i)=>`
+          <div class="node"><div class="lid">${c.id}</div><div class="ctxt"><b>${c.b}</b>${c.t}</div></div>
+          ${i<scn.chain.length-1?'<div class="link"></div>':''}
+        `).join('')}
+      </div>
+      <div class="chain-note"><span class="tag">L5 · observability gap</span><span>${scn.chainNote}</span></div>`;
+  } else if(step.mode==='PRIORITY'){
+    body = `<p class="muted" style="font-size:14px;margin:0 0 14px">Responsible actors rank the highest-risk threats to both the individual POW and the regime itself.</p>
+      <div class="ranklist">
+        ${scn.priority.map((p,i)=>`<div class="r"><div class="rk">${i+1}</div><div class="rt"><b>${p.t}</b><span>${p.d}</span><div class="tags">${p.tags.map(t=>`<i>${t}</i>`).join('')}</div></div></div>`).join('')}
+      </div>
+      <div class="chain-note" style="margin-top:16px"><span class="tag">focus</span><span>${scn.prioFocus}</span></div>`;
+  } else if(step.mode==='MITIGATE'){
+    body = `<p class="muted" style="font-size:14px;margin:0 0 14px">Responsible actors pursue technical and policy measures at the layer level. The framework requires no modification to inform pre-emptive mitigation in proportion to each actor’s capacity.</p>
+      <div class="mits">
+        ${scn.mitigation.map(m=>`<div class="mit"><div class="layhead"><span class="lid">${m.id}</span><b>${LNAME[m.id]}</b></div><p>${m.t}</p></div>`).join('')}
+      </div>`;
+  } else { // LOOP
+    body = `<p class="muted" style="font-size:14px;margin:0 0 14px">${MONITORING.text}</p>
+      <div class="loop">
+        ${MONITORING.loop.map(l=>`<div class="lp"><div class="ic">${l.ic}</div><b>${l.b}</b><p>${l.d}</p></div>`).join('')}
+      </div>
+      <div class="actorline"><span class="h">spanning</span>${MONITORING.actors.map(a=>`<span>${a}</span>`).join('')}</div>`;
+  }
+
+  panel.innerHTML = `
+    <div class="stepmeta">Step ${step.n} of 6 · ${step.mode}</div>
+    <h3>${step.name}</h3>
+    <div class="blurb">${step.blurb}</div>
+    <div class="step-body">${body}</div>`;
+}
+
+function renderExplorer(){
+  const scn = SCENARIOS[state.scenario];
+  document.querySelectorAll('.scn-tab').forEach(b=>b.classList.toggle('active', +b.dataset.s===state.scenario));
+  document.getElementById('scn-summary').innerHTML = `<div class="h">${scn.sx} · ${scn.entitlement} — ${scn.articles.join(', ')}</div><p>${scn.summary}</p>`;
+  buildStepBar();
+  renderStepPanel();
+  renderStack();
+}
+
+/* ============================================================
+   Responsibility matrix
+   ============================================================ */
+function buildMatrix(){
+  const t = document.getElementById('resp-matrix');
+  let head = `<thead><tr><th class="corner">Responsible actor</th>${RESP.functions.map(f=>`<th>${f}</th>`).join('')}</tr></thead>`;
+  let body = `<tbody>${RESP.actors.map(a=>`
+    <tr>
+      <th>${a.name}<span class="role">${a.role}</span></th>
+      ${a.v.map((v,i)=>`<td><div class="cellbox" style="background:${HEAT_SOLID[v]}" title="${a.name} · ${RESP.functions[i]} — ${v===0?'no burden':HEAT_LBL[v]}"><span class="v">${v===0?'·':v}</span></div></td>`).join('')}
+    </tr>`).join('')}</tbody>`;
+  t.innerHTML = head+body;
+}
+
+/* ============================================================
+   init
+   ============================================================ */
+function init(){
+  buildNav();
+  buildPipeline();
+  buildFwLayers();
+  buildAdapt();
+  buildStepsRef();
+  buildScnTabs();
+  renderExplorer();
+  buildMatrix();
+  // delegated navigation for CTAs, index cards, footer links
+  document.addEventListener('click', e=>{
+    const el = e.target.closest('[data-goto]');
+    if(el){ e.preventDefault(); setView(el.getAttribute('data-goto')); }
+  });
+  setView('overview');
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
