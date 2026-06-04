@@ -86,14 +86,14 @@
   .brand .name{font-family:"Fraunces",serif;font-weight:600;font-size:18px;letter-spacing:.01em}
   .brand .name b{color:var(--accent-soft);font-weight:600}
   .navlinks{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
-  .navlinks button{
+  .navlinks button,.navlinks a{
     font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.04em;
     background:transparent;border:1px solid transparent;color:var(--paper-dim);
-    padding:8px 12px;border-radius:var(--radius);cursor:pointer;transition:.18s;white-space:nowrap;
+    padding:8px 12px;border-radius:var(--radius);cursor:pointer;transition:.18s;white-space:nowrap;text-decoration:none;
   }
-  .navlinks button:hover{color:var(--paper);background:var(--surface)}
-  .navlinks button.active{color:var(--paper);border-color:var(--line);background:var(--surface-2)}
-  .navlinks button.active span{color:var(--accent-soft)}
+  .navlinks button:hover,.navlinks a:hover{color:var(--paper);background:var(--surface)}
+  .navlinks button.active,.navlinks a.active{color:var(--paper);border-color:var(--line);background:var(--surface-2)}
+  .navlinks button.active span,.navlinks a.active span{color:var(--accent-soft)}
 
   /* ---------- view container ---------- */
   main{padding:52px 0 90px;min-height:60vh}
@@ -380,7 +380,7 @@
   .nav-cta{
     font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.04em;
     border:1px solid var(--accent);background:rgba(194,58,48,.10);color:var(--accent-soft);
-    padding:8px 14px;border-radius:var(--radius);cursor:pointer;transition:.18s;white-space:nowrap;margin-left:8px;
+    padding:8px 14px;border-radius:var(--radius);cursor:pointer;transition:.18s;white-space:nowrap;margin-left:8px;text-decoration:none;
   }
   .nav-cta:hover{background:var(--accent);color:#fff;box-shadow:0 8px 22px -10px rgba(194,58,48,.7)}
 
@@ -390,7 +390,7 @@
   .indexgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   .idxcard{
     text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-    padding:20px 20px 18px;cursor:pointer;transition:.22s;position:relative;overflow:hidden;color:inherit;font:inherit;
+    padding:20px 20px 18px;cursor:pointer;transition:.22s;position:relative;overflow:hidden;color:inherit;font:inherit;text-decoration:none;
   }
   .idxcard::after{content:"";position:absolute;left:0;top:0;height:100%;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:.25s}
   .idxcard:hover{background:var(--surface-2);transform:translateY(-3px)}
@@ -473,6 +473,8 @@
   .foot-bottom .fbi{max-width:var(--maxw);margin:0 auto;padding:18px 0 42px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
   .foot-bottom .mono{font-size:11.5px;color:var(--muted-2);letter-spacing:.02em}
   .foot-bottom .mono b{color:var(--paper-dim);font-weight:500}
+  .foot-bottom .mono a{color:var(--paper-dim);text-decoration:none;transition:.15s}
+  .foot-bottom .mono a:hover{color:var(--accent-soft)}
 
   @media(max-width:900px){
     .indexgrid,.fwgrid,.erow{grid-template-columns:1fr}
@@ -489,12 +491,12 @@
 
 <header class="nav">
   <div class="nav-inner">
-    <div class="brand" data-view="overview">
+    <div class="brand" data-goto="overview" role="link" tabindex="0">
       <div class="mark"></div>
       <div class="name"><span class="the">The</span> <b>AIHL</b> Project</div>
     </div>
     <nav class="navlinks" id="navlinks"></nav>
-    <button class="nav-cta" data-goto="connect">Get involved</button>
+    <a class="nav-cta" href="#connect" data-goto="connect">Get involved</a>
   </div>
 </header>
 
@@ -559,42 +561,42 @@
       <div class="startblock stagger">
         <div class="eyebrow">Explore the project</div>
         <div class="indexgrid">
-          <button class="idxcard" data-goto="regime">
+          <a class="idxcard" href="#regime" data-goto="regime">
             <div class="k">02 · The Problem</div>
             <h4>A fragile information regime</h4>
             <p>Why POW protection depends on records, contact, and identity staying valid, accessible, and attributable.</p>
             <div class="go">Read on <span class="ar">→</span></div>
-          </button>
-          <button class="idxcard" data-goto="framework">
+          </a>
+          <a class="idxcard" href="#framework" data-goto="framework">
             <div class="k">03 · The Model</div>
             <h4>The AIHL framework</h4>
             <p>Seven layers, six IHL adaptations, and six analytic steps for mapping where synthetic media threatens entitlements.</p>
             <div class="go">See the model <span class="ar">→</span></div>
-          </button>
-          <button class="idxcard" data-goto="explorer">
+          </a>
+          <a class="idxcard" href="#explorer" data-goto="explorer">
             <div class="k">04 · Explorer</div>
             <h4>Walk a scenario</h4>
             <p>Step through three worked cases as a responsible actor: decompose, map threats, trace the chain, mitigate.</p>
             <div class="go">Open the explorer <span class="ar">→</span></div>
-          </button>
-          <button class="idxcard" data-goto="responsibility">
+          </a>
+          <a class="idxcard" href="#responsibility" data-goto="responsibility">
             <div class="k">05 · Responsibility</div>
             <h4>Who defends each layer</h4>
             <p>A distributed-defense matrix that places the burden where capacity sits, and never on the victims.</p>
             <div class="go">View the matrix <span class="ar">→</span></div>
-          </button>
-          <button class="idxcard" data-goto="research">
+          </a>
+          <a class="idxcard" href="#research" data-goto="research">
             <div class="k">06 · Research</div>
             <h4>The work behind it</h4>
             <p>The peer-reviewed basis, the sociotechnical-turn argument, and where the project goes next.</p>
             <div class="go">Read the research <span class="ar">→</span></div>
-          </button>
-          <button class="idxcard" data-goto="connect">
+          </a>
+          <a class="idxcard" href="#connect" data-goto="connect">
             <div class="k">07 · Get involved</div>
             <h4>Bring it to your work</h4>
             <p>For AI labs, humanitarian institutions, and policymakers ready to pressure-test these protections.</p>
             <div class="go">Get involved <span class="ar">→</span></div>
-          </button>
+          </a>
         </div>
       </div>
     </section>
@@ -814,8 +816,8 @@
           <p>Request a briefing, propose a red-teaming engagement, or talk through how the framework applies to your work.</p>
         </div>
         <div class="cta-actions">
-          <a class="btn primary" href="mailto:hello@example.org?subject=The%20AIHL%20Project">Request a briefing <span class="editable">[ contact ]</span></a>
-          <button class="btn ghost" data-goto="explorer">Open the explorer →</button>
+          <a class="btn primary" href="mailto:info@AIHLproject.ai?subject=The%20AIHL%20Project">Request a briefing <span class="editable">info@AIHLproject.ai</span></a>
+          <a class="btn ghost" href="#explorer" data-goto="explorer">Open the explorer →</a>
         </div>
       </div>
     </section>
@@ -833,23 +835,23 @@
     </div>
     <div class="foot-col">
       <h5>Explore</h5>
-      <button data-goto="overview">Overview</button>
-      <button data-goto="regime">The Problem</button>
-      <button data-goto="framework">The Model</button>
-      <button data-goto="explorer">Scenario Explorer</button>
-      <button data-goto="responsibility">Responsibility</button>
+      <a href="#overview" data-goto="overview">Overview</a>
+      <a href="#regime" data-goto="regime">The Problem</a>
+      <a href="#framework" data-goto="framework">The Model</a>
+      <a href="#explorer" data-goto="explorer">Scenario Explorer</a>
+      <a href="#responsibility" data-goto="responsibility">Responsibility</a>
     </div>
     <div class="foot-col">
       <h5>Engage</h5>
-      <button data-goto="research">Research</button>
-      <button data-goto="connect">Get involved</button>
-      <a href="mailto:hello@example.org?subject=The%20AIHL%20Project">Request a briefing</a>
+      <a href="#research" data-goto="research">Research</a>
+      <a href="#connect" data-goto="connect">Get involved</a>
+      <a href="mailto:info@AIHLproject.ai?subject=The%20AIHL%20Project">Request a briefing</a>
     </div>
   </div>
   <div class="foot-bottom">
     <div class="fbi">
       <div class="mono">&copy; 2026 The AIHL Project</div>
-      <div class="mono"><span class="editable">[ contact ]</span></div>
+      <div class="mono"><a href="mailto:info@AIHLproject.ai?subject=The%20AIHL%20Project">info@AIHLproject.ai</a></div>
     </div>
   </div>
 </footer>
@@ -866,6 +868,7 @@ const VIEWS = [
   {id:'responsibility',label:'Responsibility', idx:'05'},
   {id:'research',      label:'Research',       idx:'06'},
 ];
+const VIEW_IDS = [...VIEWS.map(v=>v.id), 'connect'];
 
 const LAYERS = [
   {id:'L1', name:'Foundation Models',        sub:'The generative model(s) producing synthetic video, image, or audio.'},
@@ -1093,12 +1096,16 @@ const HEAT_SOLID = {0:'var(--surface-3)',1:'var(--h1)',2:'var(--h2)',3:'var(--h3
    ============================================================ */
 const state = { view:'overview', scenario:0, step:1 };
 
-function setView(id){
+function setView(id, updateHash=true){
+  if(!VIEW_IDS.includes(id)) id = 'overview';
   state.view = id;
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('show'));
   const v = document.getElementById('view-'+id);
   if(v) v.classList.add('show');
-  document.querySelectorAll('#navlinks button').forEach(b=>b.classList.toggle('active', b.dataset.view===id));
+  document.querySelectorAll('#navlinks [data-goto]').forEach(b=>b.classList.toggle('active', b.dataset.goto===id));
+  if(updateHash && window.location.hash !== '#'+id){
+    history.pushState(null, '', '#'+id);
+  }
   // restart stagger animation
   v && v.querySelectorAll('.stagger').forEach(s=>{
     [...s.children].forEach((c,i)=>{ c.style.animation='none'; c.offsetHeight; c.style.animation=''; c.style.animationDelay=(i*0.06)+'s'; });
@@ -1109,9 +1116,14 @@ function setView(id){
 /* ---- nav ---- */
 function buildNav(){
   const n = document.getElementById('navlinks');
-  n.innerHTML = VIEWS.map(v=>`<button data-view="${v.id}"><span>${v.idx}</span> ${v.label}</button>`).join('');
-  n.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
-  document.querySelector('.brand').addEventListener('click',()=>setView('overview'));
+  n.innerHTML = VIEWS.map(v=>`<a href="#${v.id}" data-goto="${v.id}"><span>${v.idx}</span> ${v.label}</a>`).join('');
+  const brand = document.querySelector('.brand');
+  brand.addEventListener('keydown', e=>{
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      setView('overview');
+    }
+  });
 }
 
 /* ---- info regime pipeline ---- */
@@ -1365,7 +1377,10 @@ function init(){
     const el = e.target.closest('[data-goto]');
     if(el){ e.preventDefault(); setView(el.getAttribute('data-goto')); }
   });
-  setView('overview');
+  window.addEventListener('hashchange', ()=>{
+    setView(window.location.hash.replace('#','') || 'overview', false);
+  });
+  setView(window.location.hash.replace('#','') || 'overview', false);
 }
 document.addEventListener('DOMContentLoaded', init);
 </script>
