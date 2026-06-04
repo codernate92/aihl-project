@@ -458,7 +458,7 @@
 
   /* site footer */
   footer.site{border-top:1px solid var(--line-soft);background:linear-gradient(180deg,transparent,rgba(0,0,0,.28));margin-top:34px;position:relative;z-index:1}
-  .foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:42px;padding:56px 0 34px;max-width:var(--maxw);margin:0 auto}
+  .foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:42px;padding:56px 0 34px;max-width:var(--maxw);width:calc(100% - 56px);margin:0 auto}
   .foot-brand .fb{display:flex;align-items:center;gap:11px;margin-bottom:15px}
   .foot-brand .fb .mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:50%;position:relative;flex:0 0 auto}
   .foot-brand .fb .mark::before{content:"";position:absolute;inset:0;margin:auto;width:12px;height:3px;background:var(--accent)}
@@ -469,6 +469,18 @@
   .foot-col h5{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);margin:0 0 15px;font-weight:500}
   .foot-col a,.foot-col button{display:block;background:none;border:0;padding:0;text-align:left;color:var(--paper-dim);font:inherit;font-size:13.5px;text-decoration:none;cursor:pointer;margin-bottom:10px;transition:.15s}
   .foot-col a:hover,.foot-col button:hover{color:var(--accent-soft)}
+  .legal-notice{
+    max-width:var(--maxw);width:calc(100% - 56px);margin:0 auto 28px;padding:20px 22px;
+    border:1px solid var(--line);border-left:3px solid var(--accent-deep);
+    border-radius:6px;background:linear-gradient(180deg,rgba(29,33,48,.82),rgba(20,23,32,.82));
+    display:grid;grid-template-columns:220px 1fr;gap:22px;align-items:start;
+  }
+  .legal-notice h5{
+    margin:0;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+    line-height:1.45;text-transform:uppercase;color:var(--accent-soft);font-weight:500;
+  }
+  .legal-notice p{margin:0;color:var(--paper-dim);font-size:13px;line-height:1.65;max-width:860px}
+  .legal-notice strong{color:var(--paper);font-weight:600}
   .foot-bottom{border-top:1px solid var(--line-soft)}
   .foot-bottom .fbi{max-width:var(--maxw);margin:0 auto;padding:18px 0 42px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
   .foot-bottom .mono{font-size:11.5px;color:var(--muted-2);letter-spacing:.02em}
@@ -479,7 +491,8 @@
   @media(max-width:900px){
     .indexgrid,.fwgrid,.erow{grid-template-columns:1fr}
     .research-grid,.connect-lead{grid-template-columns:1fr}
-    .foot-grid{grid-template-columns:1fr;gap:32px;padding-left:28px;padding-right:28px}
+    .foot-grid{grid-template-columns:1fr;gap:32px}
+    .legal-notice{grid-template-columns:1fr}
     .foot-bottom .fbi{padding-left:28px;padding-right:28px}
     .cta-box{flex-direction:column;align-items:flex-start;padding:32px}
     .cta-actions{width:100%}
@@ -847,6 +860,10 @@
       <a href="#connect" data-goto="connect">Get involved</a>
       <a href="mailto:info@AIHLproject.ai?subject=The%20AIHL%20Project">Request a briefing</a>
     </div>
+  </div>
+  <div class="legal-notice" aria-label="Legal, attribution, and independence notice">
+    <h5>Legal, attribution, and independence notice</h5>
+    <p><strong>The AIHL Project is an independent research and evaluation initiative.</strong> It applies and extends MAESTRO’s layered threat-modeling logic to synthetic-media risks affecting prisoner-of-war protections under international humanitarian law. MAESTRO is an agentic-AI threat-modeling framework created by Ken Huang and associated with the Cloud Security Alliance AI Safety ecosystem. The AIHL Project is not affiliated with, sponsored by, certified by, or endorsed by Cloud Security Alliance, MAESTRO, Ken Huang, Distributed Apps, the ICRC, or any state or humanitarian institution unless expressly stated in writing. References to third-party frameworks, organizations, and legal instruments are for identification, attribution, research, and interoperability purposes only. AIHL’s scenarios, mappings, interpretations, and recommendations are our own and should not be treated as legal advice or as a formal IHL compliance determination.</p>
   </div>
   <div class="foot-bottom">
     <div class="fbi">
