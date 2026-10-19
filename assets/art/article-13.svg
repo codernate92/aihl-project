@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="760" viewBox="0 0 700 760">
+<defs>
+  <pattern id="engraving" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><path d="M0 0V12" stroke="#20231f" stroke-width="1" opacity=".19"/></pattern>
+  <filter id="paper-shadow" x="-30%" y="-25%" width="180%" height="170%"><feDropShadow dx="8" dy="18" stdDeviation="16" flood-color="#24251f" flood-opacity=".13"/></filter>
+</defs>
+<path d="M54 143 543 38 679 632 171 742Z" fill="#c84027"/>
+<path d="M54 143 543 38 679 632 171 742Z" fill="url(#engraving)"/>
+<g fill="none" stroke="#f1efe7" stroke-width="1" opacity=".4">
+<ellipse cx="370" cy="377" rx="195" ry="278" transform="rotate(-13 370 377)"/>
+<ellipse cx="370" cy="377" rx="182" ry="265" transform="rotate(-13 370 377)"/>
+<ellipse cx="370" cy="377" rx="169" ry="252" transform="rotate(-13 370 377)"/>
+<ellipse cx="370" cy="377" rx="156" ry="239" transform="rotate(-13 370 377)"/>
+<ellipse cx="370" cy="377" rx="143" ry="226" transform="rotate(-13 370 377)"/>
+</g>
+<g transform="translate(77 94) rotate(4 270 290)" filter="url(#paper-shadow)">
+<path d="M0 0H466L541 76V577H0Z" fill="#faf8ee"/>
+<path d="M466 0V76H541" fill="#deddd1"/>
+<path d="M466 0 469 74 541 76" fill="none" stroke="#c3c4b9"/>
+<path d="M34 42H426" stroke="#20231f" stroke-width="1"/>
+<path d="M34 48H426" stroke="#20231f" stroke-width=".5"/>
+<text x="34" y="81" font-family="Arial,sans-serif" font-size="12" letter-spacing="1.6" fill="#20231f">GENEVA CONVENTION III · 1949</text>
+<text x="20" y="358" font-family="Georgia,serif" font-size="298" letter-spacing="-28" fill="#20231f">13</text>
+<path d="M34 389H501" stroke="#20231f"/>
+<text x="34" y="427" font-family="Georgia,serif" font-size="25" fill="#20231f"><tspan x="34">Prisoners of war must at all times</tspan><tspan x="34" dy="33">be humanely treated.</tspan></text>
+<path d="M34 508H501" stroke="#a0a195" stroke-width=".8"/>
+<text x="34" y="538" font-family="Arial,sans-serif" font-size="11" letter-spacing="1" fill="#53584c">ARTICLE 13 · HUMANE TREATMENT</text>
+<path d="M457 531h40m-7-7 7 7-7 7" fill="none" stroke="#c84027" stroke-width="2"/>
+</g>
+<g transform="translate(42 611) rotate(-7)"><path d="M0 0H410V79H0Z" fill="#20231f"/><text x="21" y="33" font-family="Arial,sans-serif" font-size="11" letter-spacing="1.2" fill="#f1efe7">THE TECHNOLOGY HAS CHANGED.</text><text x="21" y="59" font-family="Georgia,serif" font-size="23" fill="#f1efe7">The protection still matters.</text></g>
+</svg>

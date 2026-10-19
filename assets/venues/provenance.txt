@@ -1,0 +1,52 @@
+AIHL PROJECT — PRESENTATION VENUE LOGO SOURCES
+Prepared 19 October 2026.
+
+These assets identify venues at which the user states work has been presented.
+They do not establish partnership, sponsorship, endorsement, or affiliation.
+No presentation dates or event names are asserted by this asset manifest.
+Institutional marks remain the property of their respective owners. No open
+copyright or trademark license is asserted. Original artwork is preserved,
+except for the already-recorded transparent-background edit to KCL below.
+
+1. KING'S COLLEGE LONDON
+   File: kcl.svg
+   Official original: https://www.kcl.ac.uk/SiteElements/2017/images/kcl-logo.svg
+   Reused from Syntony's official-asset collection, retrieved 15 October 2026.
+   Existing edit: only the full red background rectangle was removed.
+   Original lettering paths, rules, and canvas remain unchanged.
+   White artwork on transparent canvas; viewBox 0 0 477.19 363.38.
+   SHA-256: 84fcd5cd34268353adec0d8ff1867200b588dee9aa7f086bab792ad3a6fdfd99
+
+2. NEURIPS
+   File: neurips.svg
+   Official original: https://neurips.cc/static/core/img/NeurIPS-logo.svg
+   Reused unchanged from Syntony's official-asset collection, retrieved
+   15 October 2026. Full Neural Information Processing Systems wordmark.
+   Intrinsic dimensions 59.671822 x 26.738739; original SVG has no viewBox.
+   SHA-256: b582019d2789b6706dde66b046e6ffc8c7a5d029a609bd1783eb392e8ea34fce
+
+3. UNIDIR
+   File: unidir.svg
+   Official original: https://unidir.org/wp-content/uploads/2025/07/unidir-logo.svg
+   Reused unchanged from Syntony's official-asset collection, retrieved
+   15 October 2026. UN emblem, UNIDIR symbol, and wordmark lockup.
+   Transparent canvas; viewBox 0 0 203 38.
+   SHA-256: 3eb40fcd32db6b69b63e80668427bef512b45213a1ef2d9906961dd1513aa5b0
+
+4. SORBONNE UNIVERSITE
+   File: sorbonne-universite.svg
+   Source page: https://www.sorbonne-universite.fr/
+   Official asset: https://www.sorbonne-universite.fr/sites/default/files/media/2019-10/logo_4.svg
+   Downloaded 19 October 2026 from the logo URL used in the university's current
+   homepage. Original artwork, colors, paths, and canvas unchanged.
+   Transparent canvas; viewBox 0 0 388.9 156.7.
+   SHA-256: c787b01ac5d19cb36f2c5091e49670445b889baeecff6a0754f1d5178eb1570f
+   Exact institution: Sorbonne Universite, the institution at
+   sorbonne-universite.fr. This is not Universite Paris 1 Pantheon-Sorbonne,
+   Sorbonne Nouvelle, or Sorbonne Paris Nord. The user named 'Sorbonne';
+   the exact institution selection should remain visible in alt text.
+
+Validation
+All four files parse as SVG XML. No script elements, event handlers,
+foreignObject elements, embedded raster images, or external references.
+No pixel tracing, substituted typography, or reconstructed logos.

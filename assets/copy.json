@@ -1,0 +1,219 @@
+{
+  "meta": {
+    "title": "The AIHL Project — AI & International Humanitarian Law",
+    "description": "Independent research on synthetic media and the protection of people in armed conflict. Explore MAESTRO4IHL, our framework for examining risks to prisoners of war."
+  },
+  "hero": {
+    "eyebrow": "AI & International Humanitarian Law",
+    "title": "The prisoner is real.",
+    "subtitle": "The video, the voice, the record may not be.",
+    "body": "A fabricated image can expose a prisoner to humiliation. A false record can obstruct a search. A cloned voice can conceal abuse. We study what these technologies mean for the people protected by the laws of war.",
+    "primary": "Explore the research",
+    "secondary": "Meet the project",
+    "caption": "The AIHL Project is an independent research and evaluation initiative.",
+    "focus": "Our first study: synthetic media and prisoners of war."
+  },
+  "problem": {
+    "label": "The problem",
+    "title": "Protection depends on information people can trust.",
+    "intro": "A name on a capture card. A message to a family. A record of where someone is held. These connections help prisoners be found, contacted, and accounted for. Synthetic media can corrupt them.",
+    "paragraphs": [
+      "AI in armed conflict raises questions beyond targeting and weapons. It also changes the conditions of captivity: what families can know, what humanitarian institutions can verify, and what the record will show after a war.",
+      "Our research follows three conditions that make this information useful: it reflects what happened, it reaches the people entitled to it, and its source can be established. A failure in any one can affect the others."
+    ],
+    "conditions": [
+      {
+        "name": "Accuracy",
+        "technical": "Validity",
+        "text": "The record reflects the person’s actual identity, circumstances, and condition."
+      },
+      {
+        "name": "Access",
+        "technical": "Access",
+        "text": "Information reaches the prisoner, family, authorities, and humanitarian institutions entitled to receive it."
+      },
+      {
+        "name": "Origin",
+        "technical": "Attributability",
+        "text": "A record or message can be traced to a source whose identity and authority can be checked."
+      }
+    ],
+    "lifecycleTitle": "One false entry can follow a person for years.",
+    "lifecycleIntro": "A record made at capture can affect detention, correspondence, return home, and later claims. Select a stage to see the kinds of information involved.",
+    "asymmetryTitle": "The burden cannot fall on the prisoner.",
+    "asymmetry": "Prisoners and families often have the least access to the tools and evidence needed to check a fabrication. Detaining authorities, technology providers, and institutions control more of the process. Our framework asks what each can do with the capacity it has.",
+    "trust": "Even a genuine record can lose its force when fabrication is plausible. Preventing false material and preserving confidence in authentic evidence are related tasks."
+  },
+  "framework": {
+    "label": "The framework",
+    "title": "Follow the system. Find the points of failure.",
+    "name": "MAESTRO4IHL",
+    "intro": "MAESTRO4IHL is our adaptation of the MAESTRO threat-modeling framework. It follows synthetic media through seven layers, from the model that produces it to the people and institutions affected.",
+    "layersIntro": "Each layer asks a different question about the same event. Together they connect a technical failure to its consequences for a person in captivity.",
+    "adaptationsTitle": "Six changes for this research context.",
+    "adaptationsIntro": "We use MAESTRO’s structure to examine humanitarian protections, the full period of captivity, and the people who may never interact with the AI system itself.",
+    "baselineLabel": "MAESTRO starting point",
+    "adaptedLabel": "Application to POW protections",
+    "stepsTitle": "A method you can follow.",
+    "stepsIntro": "The six steps organize a case, identify connected failures, set priorities, and choose safeguards to review over time.",
+    "attribution": "MAESTRO was developed by Ken Huang. MAESTRO4IHL’s humanitarian applications, scenarios, and recommendations are the AIHL Project’s own."
+  },
+  "explorer": {
+    "label": "Worked cases",
+    "title": "Three fabrications. Three kinds of harm.",
+    "intro": "A video, a document, a voice. Follow each hypothetical case through the same six steps to see where technical safeguards and institutional practices meet.",
+    "note": "These cases illustrate possible failures. They are not reports of documented incidents. The severity labels are qualitative judgments made for this analysis, not measured probabilities.",
+    "legalLabel": "Protections considered",
+    "stepLabel": "Analysis step",
+    "mappingLabel": "The seven layers in this case",
+    "chainLabel": "How the failures connect",
+    "priorityLabel": "What needs attention first",
+    "mitigationLabel": "Safeguards to test",
+    "monitoringLabel": "Keep the work under review",
+    "sourceNote": "Treaty references guide the research. Their application depends on the conflict, the facts, and the person’s legal status."
+  },
+  "responsibility": {
+    "label": "Responsibility",
+    "title": "Put the work where the capacity is.",
+    "intro": "States hold records. Developers shape model behavior. Platforms control distribution. Humanitarian institutions and monitors have different access, expertise, and mandates. Effective safeguards require work across these roles.",
+    "matrixIntro": "The matrix proposes where each actor can make its strongest practical contribution. Select a row to compare the five functions.",
+    "functions": [
+      {
+        "name": "Documentation",
+        "text": "Preserve accurate records and evidence of how they were created and handled."
+      },
+      {
+        "name": "Detection",
+        "text": "Identify suspected fabrications and failures in safeguards."
+      },
+      {
+        "name": "Escalation",
+        "text": "Bring findings to people and institutions able to act."
+      },
+      {
+        "name": "Interdiction",
+        "text": "Interrupt harmful distribution or use where the actor has authority and control."
+      },
+      {
+        "name": "Hardening",
+        "text": "Improve systems and practices so the same failure is less likely to recur."
+      }
+    ],
+    "scaleLabel": "Proposed emphasis",
+    "scale": [
+      "None assigned",
+      "Supporting",
+      "Contributing",
+      "Substantial",
+      "Primary emphasis"
+    ],
+    "note": "These weights are qualitative recommendations about defensive work. They are not measured capability scores or a determination of legal duties. Existing obligations require a separate legal assessment.",
+    "principle": "No defensive burden is assigned to prisoners or their families.",
+    "principleText": "Their ability to identify a fake must not become a condition of their protection."
+  },
+  "research": {
+    "label": "Research",
+    "title": "The laws of war belong in AI evaluation.",
+    "intro": "The people protected by international humanitarian law must be part of how AI systems are tested. Our first study examines synthetic media and prisoners of war.",
+    "abstractTitle": "What the study does",
+    "paragraphs": [
+      "The study examines how fabricated media can damage the records and communications that support POW protections. It focuses on dignity, reliable information, and contact with the outside world under the Third Geneva Convention and relevant customary rules.",
+      "MAESTRO4IHL adapts a seven-layer threat model to this setting. Three hypothetical cases show how a failure can travel from a generative model into a family’s understanding, a tracing process, or the public record. Six analytic steps connect those failures to proposed safeguards.",
+      "The framework also proposes how defensive work can be shared according to practical capacity. It is a basis for testing and discussion. The scenarios and weights are illustrative; they do not establish how often these harms occur or prove that a proposed safeguard will prevent them."
+    ],
+    "thesisTitle": "On the case for a sociotechnical turn in red-teaming AI systems in armed conflict",
+    "thesisDescription": "The research argument behind the project: examine how technical systems and institutional practices affect people protected by the laws of war.",
+    "reference": "MAESTRO4IHL: A threat model for synthetic-media violations of prisoner-of-war protections under international humanitarian law. The AIHL Project, 2026.",
+    "nextTitle": "The next research questions",
+    "next": [
+      {
+        "title": "More cases",
+        "text": "Extend the case library as new risks are examined, and make the assumptions behind each case explicit."
+      },
+      {
+        "title": "Testable evaluations",
+        "text": "Develop authorized red-teaming exercises with clear criteria, documented results, and repeatable methods."
+      },
+      {
+        "title": "Institutional response",
+        "text": "Examine how findings should enter reporting, correction, and accountability processes."
+      }
+    ]
+  },
+  "about": {
+    "label": "About the project",
+    "title": "A technical question. A human consequence.",
+    "intro": "The AIHL Project brings together research on AI evaluation, security, international law, and the institutions that protect people in conflict.",
+    "mission": "We founded the project to study how synthetic media can harm people protected by international humanitarian law. Our first focus is prisoners of war: the records that identify them, the communications that connect them to others, and the dignity they are owed in captivity. MAESTRO4IHL is the framework we developed for that work.",
+    "team": [
+      {
+        "name": "Nathan Heath",
+        "role": "Co-founder",
+        "summary": "Decision scientist and AI safety researcher. Founder and CEO of Syntony.",
+        "paragraphs": [
+          "Nathan Heath is a decision scientist and AI safety researcher with 14 years of experience in geopolitics and emerging technology. He founded Syntony, where he leads AI evaluation, governance, risk advisory, and software work. Previously, as a Senior Research Scientist at National Security Innovations, he worked on emerging technology risk, AI integration, and security cooperation for U.S. government clients.",
+          "He red-teams frontier AI systems for OpenAI and Anthropic and serves as an Expert Advisor to the Cloud Security Alliance. He is a Security Fellow with the Truman National Security Project, a member of MIT AI Alignment, and a contributing researcher with the Oxford Martin AI Governance Initiative. His research examines system dynamics and frontier AI risk, the protection of testimony archives from synthetic media, and defense industrial cooperation in Europe.",
+          "Nathan holds an M.A. in Law and Diplomacy from The Fletcher School at Tufts University. He also studied Politics, Philosophy, and Economics at Oxford, and diplomatic and business strategy at Harvard. His work has been presented at UNIDIR, the International Association for Safe and Ethical AI at UNESCO House, the Cambridge Centre for Geopolitics, the Minderoo Centre for Technology & Democracy, the American University of Paris, the International Institute for Justice, and the UK Ministry of Defence’s Deterrence and Assurance Academic Alliance. It has appeared in War on the Rocks, RAND Europe, World Politics Review, PRISM, and The Washington Post.",
+          "He writes A Mind of Their Own on AI consciousness, governance, and safety, and contributes to LessWrong. He leads the North Carolina chapter of the OpenAI Forum and contributes research to the Meta Oversight Board and the EvalEval Coalition."
+        ]
+      },
+      {
+        "name": "Wm. Matthew Kennedy, PhD",
+        "role": "Co-founder",
+        "summary": "AI+ Senior Research Fellow at King’s College London. Researcher in AI ethics, safety, and political economy.",
+        "paragraphs": [
+          "Wm. Matthew (Matt) Kennedy is an AI+ Senior Research Fellow at King’s College London and a former Marie Skłodowska-Curie Postdoctoral Fellow at the Oxford Internet Institute. His research examines AI ethics, safety, and political economy, with particular interests in evaluation and red-teaming, AI and knowledge production, education, epistemic harms, and decolonial AI.",
+          "He is affiliated with the University of Sydney Centre for AI, Trust, and Governance; the Machine Learning & Society team at Women at the Table; the AI and Education at Oxford University research hub; and the Center for AI and Digital Policy. He regularly contributes to Humane Intelligence events and is an inaugural ORF US-India AI Fellow.",
+          "Matt earned his PhD at the University of Sydney, studying the history of colonialism, international law, and scientific governance. He subsequently held research fellowships at the University of Texas at Austin and the University of Sussex. In the technology industry, he led a small AI evaluation team, collaborated on research in AI ethics, safety, and governance, and advised U.S. and international public officials on AI policy.",
+          "At the Oxford Internet Institute, his project examined how the colonial past can inform decisions about the design, development, use, and governance of AI systems."
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "label": "Work with us",
+    "title": "Bring a question worth investigating.",
+    "intro": "We work with researchers, AI developers, humanitarian institutions, platforms, and policymakers examining these risks. Get in touch about the framework, a research question, or an evaluation.",
+    "email": "info@AIHLproject.org",
+    "action": "Contact the project",
+    "audiences": [
+      {
+        "name": "AI developers",
+        "text": "Examine model and system behavior against the failures described in the cases."
+      },
+      {
+        "name": "Platforms",
+        "text": "Review how fabricated prisoner media is identified, distributed, and addressed."
+      },
+      {
+        "name": "Humanitarian institutions",
+        "text": "Bring operational knowledge to questions of records, contact, verification, and response."
+      },
+      {
+        "name": "Policymakers",
+        "text": "Examine how dignity, accurate records, and meaningful contact are addressed in AI governance."
+      }
+    ],
+    "process": [
+      {
+        "title": "Define the question",
+        "text": "Identify the systems, people, and protections relevant to your work."
+      },
+      {
+        "title": "Examine the evidence",
+        "text": "Use worked cases and authorized evaluations to investigate possible failures."
+      },
+      {
+        "title": "Agree the next steps",
+        "text": "Choose safeguards, assign actions, and establish how results will be reviewed."
+      }
+    ]
+  },
+  "footer": {
+    "description": "Independent research on AI and the protection of people in armed conflict.",
+    "attribution": "MAESTRO4IHL adapts MAESTRO, developed by Ken Huang. The project’s scenarios, mappings, and recommendations are its own.",
+    "independence": "The AIHL Project is independent. References to the Cloud Security Alliance, MAESTRO, Ken Huang, Distributed Apps, the ICRC, and other institutions do not imply affiliation, sponsorship, certification, or endorsement.",
+    "legal": "This research is not legal advice or a formal IHL compliance determination. Legal applicability depends on the facts and the relevant conflict and status classifications.",
+    "copyright": "© 2026 The AIHL Project"
+  }
+}
